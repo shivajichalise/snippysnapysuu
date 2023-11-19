@@ -1,7 +1,6 @@
 import ModalProps from "../types/ModalProps";
 
 const Modal = ({ open, position, onClose, children }: ModalProps) => {
-  console.log(position);
   return (
     <div className={`${open ? "block" : "hidden"}`}>
       <span

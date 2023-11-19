@@ -3,7 +3,9 @@ import MenuProps from "../types/MenuProps";
 const Menu = ({ image, text, showText, toggleModal }: MenuProps) => {
   return (
     <div
-      className="flex justify-around items-center hover:cursor-pointer"
+      className={`flex justify-around items-center ${
+        !showText && "hover:cursor-pointer"
+      }`}
       onClick={toggleModal}
     >
       <img

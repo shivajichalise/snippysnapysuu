@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { ReactElement, useState } from "react";
 import Menu from "./Menu";
 import Modal from "../components/Modal";
+import UserProfileMenu from "./UserProfileMenu";
 
 const Navbar = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -26,10 +27,21 @@ const Navbar = () => {
         position={modalPosition}
         onClose={() => toggleModal("right")}
       >
-        <h1>Modal</h1>
+        {modalPosition === "right" ? (
+          <UserProfileMenu toggleModal={() => toggleModal(modalPosition)}>
+            <Menu
+              image={image}
+              text={text}
+              showText={true}
+              toggleModal={() => null}
+            />
+          </UserProfileMenu>
+        ) : (
+          <h1>h</h1>
+        )}
       </Modal>
 
-      <div className="flex justify-between items-center p-3 bg-100">
+      <nav className="flex justify-between items-center p-3 bg-100">
         <Menu
           image={image}
           text={null}
@@ -39,10 +51,10 @@ const Navbar = () => {
         <Menu
           image={image}
           text={text}
-          showText={true}
+          showText={false}
           toggleModal={() => toggleModal("right")}
         />
-      </div>
+      </nav>
     </>
   );
 };
