@@ -12,7 +12,7 @@ const Modal = ({ open, position, onClose, children }: ModalProps) => {
           position === "right"
             ? "right-0 rounded-l-2xl"
             : "left-0 rounded-r-2xl"
-        } w-1/4 h-screen bg-100 p-4`}
+        } w-80 h-screen bg-100 p-4 md:w-96`}
       >
         {children}
       </div>
