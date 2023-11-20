@@ -50,7 +50,7 @@ const Navbar = () => {
         )}
       </Modal>
 
-      <nav className="flex justify-between items-center p-3 bg-100">
+      <nav className="flex justify-between items-center h-14 p-3 bg-100">
         <Menu
           image={logo}
           text={null}
