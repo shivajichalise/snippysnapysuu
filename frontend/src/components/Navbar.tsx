@@ -1,7 +1,9 @@
-import { ReactElement, useState } from "react";
+import { useState } from "react";
 import Menu from "./Menu";
 import Modal from "../components/Modal";
 import UserProfileMenu from "./UserProfileMenu";
+import logo from "../assets/logo.png";
+import AppMenu from "./AppMenu";
 
 const Navbar = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -37,13 +39,20 @@ const Navbar = () => {
             />
           </UserProfileMenu>
         ) : (
-          <h1>h</h1>
+          <AppMenu toggleModal={() => toggleModal(modalPosition)}>
+            <Menu
+              image={logo}
+              text={null}
+              showText={false}
+              toggleModal={() => null}
+            />
+          </AppMenu>
         )}
       </Modal>
 
       <nav className="flex justify-between items-center p-3 bg-100">
         <Menu
-          image={image}
+          image={logo}
           text={null}
           showText={false}
           toggleModal={() => toggleModal("left")}

@@ -5,11 +5,11 @@ const Anchor = (props: AnchorProps) => {
   return (
     <Link
       to={props.to}
-      className="block w-full p-2 rounded-md hover:bg-200 hover:cursor-pointer"
+      className="block w-full p-2 m-y rounded-md cursor-pointer hover:bg-200"
     >
       <div className="flex justify-start items-center">
         {props.icon}
-        <label className="ml-2 text-sm"> {props.text} </label>
+        <h1 className="ml-2 text-sm"> {props.text} </h1>
       </div>
     </Link>
   );
