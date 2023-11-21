@@ -4,63 +4,63 @@ import {
   IconSourceCode,
   IconStarsFilled,
   IconTag,
-} from "@tabler/icons-react";
-import Anchor from "./Anchor";
-import Button from "./Button";
+} from "@tabler/icons-react"
+import Anchor from "./Anchor"
+import Button from "./Button"
 
 const Sidebar = () => {
   return (
-    <div className="flex flex-col p-4 w-56 h-[calc(100vh-(3.5rem))] overflow-y-auto bg-100 border-r border-t border-200 md:w-72">
-      <div className="mb-4">
+    <div className='bg-300 border-200 flex h-[calc(100vh-(3.5rem))] w-56 flex-col overflow-y-auto border-r p-4 md:w-72'>
+      <div className='mb-4'>
         <Anchor
-          to="https://instagram.com"
+          to='https://instagram.com'
           icon={<IconSourceCode size={16} />}
-          text="Snippets"
+          text='Snippets'
         />
         <Anchor
-          to="https://instagram.com"
+          to='https://instagram.com'
           icon={<IconStarsFilled size={16} />}
-          text="Favorites"
+          text='Favorites'
         />
       </div>
-      <div className="mb-4">
-        <div className="flex justify-between items-center">
-          <label className="text-sm text-accent-200">Collections</label>
-          <Button type="primary" onClick={() => console.log("new collectin")}>
+      <div className='mb-4'>
+        <div className='flex items-center justify-between'>
+          <label className='text-accent-200 text-sm'>Collections</label>
+          <Button type='primary' onClick={() => console.log("new collectin")}>
             <IconPlus size={13} />
           </Button>
         </div>
         <Anchor
-          to="https://instagram.com"
+          to='https://instagram.com'
           icon={<IconFolderFilled size={16} />}
-          text="DevOps"
+          text='DevOps'
         />
         <Anchor
-          to="https://instagram.com"
+          to='https://instagram.com'
           icon={<IconFolderFilled size={16} />}
-          text="Frontend"
+          text='Frontend'
         />
       </div>
-      <div className="mb-4">
-        <div className="flex justify-between items-center">
-          <label className="text-sm text-accent-200">Tags</label>
-          <Button type="primary" onClick={() => console.log("new collectin")}>
+      <div className='mb-4'>
+        <div className='flex items-center justify-between'>
+          <label className='text-accent-200 text-sm'>Tags</label>
+          <Button type='primary' onClick={() => console.log("new collectin")}>
             <IconPlus size={13} />
           </Button>
         </div>
         <Anchor
-          to="https://instagram.com"
+          to='https://instagram.com'
           icon={<IconTag size={16} />}
-          text="Reactjs"
+          text='Reactjs'
         />
         <Anchor
-          to="https://instagram.com"
+          to='https://instagram.com'
           icon={<IconTag size={16} />}
-          text="Bash"
+          text='Bash'
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Sidebar;
+export default Sidebar

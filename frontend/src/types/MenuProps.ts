@@ -1,11 +1,11 @@
 interface MenuProps {
-  image: string;
+  image: string
   text: {
-    title: string;
-    description: string;
-  } | null;
-  showText: boolean;
-  toggleModal: () => void;
+    title: string
+    description: string
+  } | null
+  showText: boolean
+  toggleModal: () => void
 }
 
-export default MenuProps;
+export default MenuProps

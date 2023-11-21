@@ -1,8 +1,8 @@
-import { ReactElement } from "react";
+import { ReactElement } from "react"
 
 interface UserProfileMenuProps {
-  toggleModal: () => void;
-  children: ReactElement;
+  toggleModal: () => void
+  children: ReactElement
 }
 
-export default UserProfileMenuProps;
+export default UserProfileMenuProps

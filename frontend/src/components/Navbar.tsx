@@ -1,26 +1,26 @@
-import { useState } from "react";
-import Menu from "./Menu";
-import Modal from "../components/Modal";
-import UserProfileMenu from "./UserProfileMenu";
-import logo from "../assets/logo.png";
-import AppMenu from "./AppMenu";
+import { useState } from "react"
+import Menu from "./Menu"
+import Modal from "../components/Modal"
+import UserProfileMenu from "./UserProfileMenu"
+import logo from "../assets/logo.png"
+import AppMenu from "./AppMenu"
 
 const Navbar = () => {
-  const [openModal, setOpenModal] = useState<boolean>(false);
-  const [modalPosition, setModalPosition] = useState<"right" | "left">("right");
+  const [openModal, setOpenModal] = useState<boolean>(false)
+  const [modalPosition, setModalPosition] = useState<"right" | "left">("right")
 
   const toggleModal = (position: "right" | "left") => {
-    setModalPosition(position);
-    setOpenModal(!openModal);
-  };
+    setModalPosition(position)
+    setOpenModal(!openModal)
+  }
 
   const image =
-    "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=80";
+    "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=80"
 
   const text = {
     title: "shivajichalise",
     description: "Shivaji Chalise",
-  };
+  }
 
   return (
     <>
@@ -50,7 +50,7 @@ const Navbar = () => {
         )}
       </Modal>
 
-      <nav className="flex justify-between items-center h-14 p-3 bg-100">
+      <nav className='bg-300 border-200 flex h-14 items-center justify-between border-b p-3'>
         <Menu
           image={logo}
           text={null}
@@ -65,7 +65,7 @@ const Navbar = () => {
         />
       </nav>
     </>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

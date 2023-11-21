@@ -5,19 +5,44 @@ export default {
     extend: {
       colors: {
         // dark mode
-        100: "#1D1F21",
-        200: "#2c2e30",
-        300: "#444648",
+        100: "#444648",
+        200: "#2C2E30",
+        300: "#1D1F21",
 
-        primary: "#FF6600",
-        "primary-200": "#ff983f",
-        "primary-300": "#ffffa1",
+        primary: "#FFFFA1",
+        "primary-200": "#FF983F",
+        "primary-300": "#FF6600",
+
+        secondary: "#474A4C",
+        "secondary-200": "#2C2E30",
+        "secondary-300": "#1D1F21",
 
         accent: "#F5F5F5",
-        "accent-200": "#929292",
+        "accent-200": "#D5D5D5",
+        "accent-300": "#929292",
+
+        neutral: "#444648",
+        "neutral-200": "#2C2E30",
+        "neutral-300": "#1D1F21",
 
         text: "#FFFFFF",
-        "text-200": "#e0e0e0",
+        "text-200": "#E0E0E0",
+        "text-300": "#C0C0C0",
+
+        // Info Colors
+        info: "#5fa8e2",
+        "info-200": "#3498db",
+        "info-300": "#1d6fa5",
+
+        // Error Colors
+        error: "#e74c3c",
+        "error-200": "#ea6554",
+        "error-300": "#9f3627",
+
+        // Warning Colors
+        warning: "#f7b656",
+        "warning-200": "#f39c12",
+        "warning-300": "#c17f0e",
 
         // light mode
         "bg-light": "#F7EEDD",
@@ -37,4 +62,4 @@ export default {
     },
   },
   plugins: [],
-};
+}

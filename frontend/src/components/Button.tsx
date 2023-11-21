@@ -1,4 +1,4 @@
-import ButtonProps from "../types/ButtonProps";
+import ButtonProps from "../types/ButtonProps"
 
 const Button = (props: ButtonProps) => {
   return (
@@ -8,7 +8,7 @@ const Button = (props: ButtonProps) => {
     >
       {props.children}
     </button>
-  );
-};
+  )
+}
 
-export default Button;
+export default Button
