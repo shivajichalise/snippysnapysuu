@@ -10,7 +10,7 @@ import Button from "./Button"
 
 const Sidebar = () => {
   return (
-    <div className='bg-300 border-200 flex h-[calc(100vh-(3.5rem))] w-56 flex-col overflow-y-auto border-r p-4 md:w-72'>
+    <div className='flex h-[calc(100vh-(3.5rem))] w-56 flex-col overflow-y-auto border-r border-200 bg-300 p-4 md:w-72'>
       <div className='mb-4'>
         <Anchor
           to='https://instagram.com'
@@ -25,7 +25,7 @@ const Sidebar = () => {
       </div>
       <div className='mb-4'>
         <div className='flex items-center justify-between'>
-          <label className='text-accent-200 text-sm'>Collections</label>
+          <label className='text-sm text-accent-200'>Collections</label>
           <Button type='primary' onClick={() => console.log("new collectin")}>
             <IconPlus size={13} />
           </Button>
@@ -43,7 +43,7 @@ const Sidebar = () => {
       </div>
       <div className='mb-4'>
         <div className='flex items-center justify-between'>
-          <label className='text-accent-200 text-sm'>Tags</label>
+          <label className='text-sm text-accent-200'>Tags</label>
           <Button type='primary' onClick={() => console.log("new collectin")}>
             <IconPlus size={13} />
           </Button>
