@@ -1,14 +1,25 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import RightContentProps from "../types/RightContentProps"
+import snippets from "../config/snippets"
 
-const RightContent = () => {
-  const snippet = useState(null)
+const RightContent = (props: RightContentProps) => {
+  const [snippet, setSnippet] = useState({})
+
+  useEffect(() => {
+    const fetchSnippet = () => {
+      const foundSnippet = snippets.find((snip) => snip.id === props.id)
+      setSnippet(foundSnippet)
+    }
+
+    fetchSnippet()
+  }, [props.id])
 
   return (
     <div className='flex w-full items-center justify-center p-4'>
-      {snippet ? (
+      {props.id === "0" ? (
         <h1 className='text-100'>SnipySnapySuuuuuuu...</h1>
       ) : (
-        <h1 className='text-100'>Right content</h1>
+        <h1 className='text-100'>{snippet?.title}</h1>
       )}
     </div>
   )
