@@ -10,7 +10,7 @@ const Content = () => {
   }
 
   return (
-    <div className='bg-300 flex w-full'>
+    <div className='bg-300 flex flex-1'>
       <LeftContent handleClick={handleClick} />
       <RightContent id={snippetId} />
     </div>

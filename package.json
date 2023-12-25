@@ -23,5 +23,10 @@
     "concurrently": "^8.2.2",
     "nodemon": "^3.0.1",
     "ts-node": "^10.9.1"
+  },
+  "dependencies": {
+    "markdown-to-jsx": "^7.3.2",
+    "react-copy-to-clipboard": "^5.1.0",
+    "react-syntax-highlighter": "^15.5.0"
   }
 }

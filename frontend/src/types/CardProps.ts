@@ -1,9 +1,7 @@
+import Snippet from "./Snippet"
+
 interface CardProps {
-  id: number
-  title: string
-  description: string
-  snippets: string[]
-  tags: string[]
+  snippet: Snippet
   handleClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
 }
 
