@@ -9,11 +9,19 @@ import { CopyToClipboard } from "react-copy-to-clipboard"
 const RightContent = (props: RightContentProps) => {
   const [snippet, setSnippet] = useState<Snippet>()
 
-  const [copied, setCopied] = useState(false)
+  const [copied, setCopied] = useState<boolean[]>([])
+
+  const handleCopy = (index: number) => {
+    setCopied((prevCopiedStates) => {
+      const newCopiedStates = [...prevCopiedStates]
+      newCopiedStates[index] = true
+      return newCopiedStates
+    })
+  }
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setCopied(false)
+      setCopied(Array(snippet?.snippets.length).fill(false))
     }, 2000)
 
     return () => clearTimeout(timer)
@@ -23,6 +31,7 @@ const RightContent = (props: RightContentProps) => {
     const fetchSnippet = () => {
       const foundSnippet = snippets.find((snip) => snip.id === props.id)
       setSnippet(foundSnippet)
+      setCopied(Array(snippet?.snippets.length).fill(false))
     }
 
     fetchSnippet()
@@ -38,18 +47,16 @@ const RightContent = (props: RightContentProps) => {
             <h1 className='text-2xl'>{snippet?.title}</h1>
             <p className='text-primary-200'>{snippet?.description}</p>
           </div>
-          {snippet?.snippets.map((snip) => (
-            <div className='mt-7'>
-              <p className='text-accent-300 overflow-x-scroll text-sm'>
-                {snip.description}
-              </p>
+          {snippet?.snippets.map((snip, index) => (
+            <div className='mt-7' key={index}>
+              <p className='text-accent-300 text-sm'>{snip.description}</p>
               <div className='relative my-5'>
                 <CopyToClipboard
                   text={snip.code}
-                  onCopy={() => setCopied(true)}
+                  onCopy={() => handleCopy(index)}
                 >
                   <button className='btn btn-sm bg-primary border-primary hover:border-primary-200 absolute right-2 top-2 rounded-lg border-2 p-1'>
-                    {copied ? (
+                    {copied[index] ? (
                       <svg
                         xmlns='http://www.w3.org/2000/svg'
                         className='icon icon-tabler icon-tabler-clipboard-check'
