@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect, useState } from "react"
 import snippets from "../config/snippets"
 import LeftContentProps from "../types/LeftContentProps"
 import Card from "./Card"
-import InputText from "./InputText."
+import InputText from "./InputText.tsx"
 
 const LeftContent = (props: LeftContentProps) => {
   const [searchParams] = useState(["title", "tags"])
@@ -14,21 +14,17 @@ const LeftContent = (props: LeftContentProps) => {
   }
 
   useEffect(() => {
-    if (!searchQuery.trim()) {
-      setSnippetsList(snippets)
-    } else {
-      setSnippetsList(
-        // filter based on input text and the params
-        snippets.filter((snippet) =>
-          searchParams.some((param) =>
-            snippet[param]
-              .toString()
-              .toLowerCase()
-              .includes(searchQuery.toLowerCase()),
-          ),
+    setSnippetsList(
+      // filter based on input text and the params
+      snippets.filter((snippet) =>
+        searchParams.some((param) =>
+          snippet[param]
+            .toString()
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase()),
         ),
-      )
-    }
+      ),
+    )
   }, [searchQuery])
 
   return (
