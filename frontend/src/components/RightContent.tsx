@@ -38,7 +38,7 @@ const RightContent = (props: RightContentProps) => {
   }, [props.id])
 
   return (
-    <div className='flex h-[calc(100vh-3.5rem)] w-96 flex-1 items-center justify-center overflow-x-scroll overflow-y-scroll p-4'>
+    <div className='flex h-[calc(100vh-3.5rem)] w-96 flex-1 items-center justify-center overflow-y-scroll p-4'>
       {props.id === "0" ? (
         <h1 className='text-100'>SnipySnapySuuuuuuu...</h1>
       ) : (
