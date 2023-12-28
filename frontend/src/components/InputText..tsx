@@ -1,3 +1,5 @@
+import InputTextProps from "../types/InputTextProps"
+
 const InputText = (props: InputTextProps) => {
   return (
     <input
@@ -6,6 +8,7 @@ const InputText = (props: InputTextProps) => {
       id={props.id}
       name={props.name}
       placeholder={props.placeholder}
+      onChange={props.onChange}
     />
   )
 }
