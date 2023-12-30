@@ -5,6 +5,8 @@ import snippets from "../config/snippets"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { tomorrow } from "react-syntax-highlighter/dist/esm/styles/prism"
 import { CopyToClipboard } from "react-copy-to-clipboard"
+import Button from "./Button"
+import { IconX } from "@tabler/icons-react"
 
 const RightContent = (props: RightContentProps) => {
   const [snippet, setSnippet] = useState<Snippet>()
@@ -39,12 +41,17 @@ const RightContent = (props: RightContentProps) => {
 
   return (
     <div className='flex h-[calc(100vh-3.5rem)] w-96 flex-1 items-center justify-center overflow-y-scroll p-4'>
-      {props.id === "0" ? (
+      {snippet === undefined ? (
         <h1 className='text-100'>SnipySnapySuuuuuuu...</h1>
       ) : (
         <div className='flex h-full w-full flex-col'>
           <div>
-            <h1 className='text-2xl'>{snippet?.title}</h1>
+            <div className='flex justify-between'>
+              <h1 className='text-2xl'>{snippet?.title}</h1>
+              <Button type='primary' onClick={props.clearSelectedSnippet}>
+                <IconX size={15} className='m-1' />
+              </Button>
+            </div>
             <p className='text-primary-200'>{snippet?.description}</p>
           </div>
           {snippet?.snippets.map((snip, index) => (

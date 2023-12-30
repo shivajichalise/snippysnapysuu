@@ -10,7 +10,7 @@ import Button from "./Button"
 
 const Sidebar = () => {
   return (
-    <div className='border-200 bg-300 flex h-[calc(100vh-(3.5rem))] w-56 flex-col overflow-y-auto border-r p-4 md:w-72'>
+    <div className='border-200 bg-300 flex h-[calc(100vh-(3.5rem))] w-64 flex-col border-r p-4'>
       <div className='mb-4'>
         <Anchor
           to='https://instagram.com'
