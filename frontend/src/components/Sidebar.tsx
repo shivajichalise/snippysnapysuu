@@ -13,15 +13,12 @@ const Sidebar = () => {
     <div className='border-200 bg-300 flex h-[calc(100vh-(3.5rem))] w-64 flex-col border-r p-4'>
       <div className='mb-4'>
         <Anchor
-          to='https://instagram.com'
+          to='/'
           icon={<IconSourceCode size={16} />}
           text='Snippets'
+          isActive={true}
         />
-        <Anchor
-          to='https://instagram.com'
-          icon={<IconStarsFilled size={16} />}
-          text='Favorites'
-        />
+        <Anchor to='#' icon={<IconStarsFilled size={16} />} text='Favorites' />
       </div>
       <div className='mb-4'>
         <div className='flex items-center justify-between'>
@@ -30,16 +27,8 @@ const Sidebar = () => {
             <IconPlus size={13} />
           </Button>
         </div>
-        <Anchor
-          to='https://instagram.com'
-          icon={<IconFolderFilled size={16} />}
-          text='DevOps'
-        />
-        <Anchor
-          to='https://instagram.com'
-          icon={<IconFolderFilled size={16} />}
-          text='Frontend'
-        />
+        <Anchor to='#' icon={<IconFolderFilled size={16} />} text='DevOps' />
+        <Anchor to='#' icon={<IconFolderFilled size={16} />} text='Frontend' />
       </div>
       <div className='mb-4'>
         <div className='flex items-center justify-between'>
@@ -48,16 +37,8 @@ const Sidebar = () => {
             <IconPlus size={13} />
           </Button>
         </div>
-        <Anchor
-          to='https://instagram.com'
-          icon={<IconTag size={16} />}
-          text='Reactjs'
-        />
-        <Anchor
-          to='https://instagram.com'
-          icon={<IconTag size={16} />}
-          text='Bash'
-        />
+        <Anchor to='#' icon={<IconTag size={16} />} text='Reactjs' />
+        <Anchor to='#' icon={<IconTag size={16} />} text='Bash' />
       </div>
     </div>
   )
