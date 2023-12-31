@@ -34,6 +34,7 @@ $allUsers = User::withoutGlobalScope('active')->get(); // Retrieves all users wi
       },
     ],
     tags: ["laravel", "eloquent"],
+    isFavourite: true,
   },
   {
     id: "2",
@@ -57,6 +58,7 @@ $allUsers = User::withoutGlobalScope('active')->get(); // Retrieves all users wi
       },
     ],
     tags: ["hashmap", "rust"],
+    isFavourite: false,
   },
   {
     id: "3",
@@ -80,6 +82,7 @@ $allUsers = User::withoutGlobalScope('active')->get(); // Retrieves all users wi
       },
     ],
     tags: ["hashmap", "rust", "vector"],
+    isFavourite: false,
   },
 ]
 

@@ -8,6 +8,7 @@ interface Snippet {
     code: string
   }[]
   tags: string[]
+  isFavourite: boolean
 }
 
 export default Snippet
