@@ -5,6 +5,7 @@ interface AnchorProps {
   text: string
   icon: ReactElement | null
   isActive: boolean
+  select: (tab: string) => void
 }
 
 export default AnchorProps

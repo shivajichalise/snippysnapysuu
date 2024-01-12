@@ -8,24 +8,35 @@ const LeftContent = (props: LeftContentProps) => {
   const [searchParams] = useState(["title", "tags"])
   const [searchQuery, setSearchQuery] = useState("")
   const [snippetsList, setSnippetsList] = useState(snippets)
+  const [listFavouriteSnippets, setListFavouriteSnippets] = useState(false)
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value)
   }
 
   useEffect(() => {
+    props.toShow === "favourites"
+      ? setListFavouriteSnippets(true)
+      : setListFavouriteSnippets(false)
+  }, [props.toShow])
+
+  useEffect(() => {
     setSnippetsList(
       // filter based on input text and the params
-      snippets.filter((snippet) =>
-        searchParams.some((param) =>
-          snippet[param]
+      snippets.filter((snippet) => {
+        if (listFavouriteSnippets && !snippet.isFavourite) {
+          return false
+        }
+
+        return searchParams.some((param) =>
+          (snippet as any)[param]
             .toString()
             .toLowerCase()
             .includes(searchQuery.toLowerCase()),
-        ),
-      ),
+        )
+      }),
     )
-  }, [searchQuery])
+  }, [searchQuery, listFavouriteSnippets])
 
   return (
     <div className='flex h-[calc(100vh-3.5rem)] flex-col overflow-y-scroll p-4'>

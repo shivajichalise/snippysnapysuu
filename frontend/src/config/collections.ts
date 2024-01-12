@@ -7,7 +7,7 @@ const collections = [
   {
     id: "2",
     name: "Frontend",
-    slug: "fontend",
+    slug: "frontend",
   },
 ]
 

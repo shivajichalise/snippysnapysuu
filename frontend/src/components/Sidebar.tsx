@@ -19,13 +19,15 @@ const Sidebar = (props: SidebarProps) => {
           to='/'
           icon={<IconSourceCode size={16} />}
           text='Snippets'
-          isActive={true}
+          isActive={props.tab === "snippets" ? true : false}
+          select={props.selectTab}
         />
         <Anchor
           to='#'
           icon={<IconStarsFilled size={16} />}
-          text='Favorites'
-          isActive={false}
+          text='Favourites'
+          isActive={props.tab === "favourites" ? true : false}
+          select={props.selectTab}
         />
       </div>
       <div className='mb-4'>
@@ -41,7 +43,8 @@ const Sidebar = (props: SidebarProps) => {
             to='#'
             icon={<IconFolderFilled size={16} />}
             text={collection.name}
-            isActive={false}
+            isActive={props.tab === collection.slug ? true : false}
+            select={props.selectTab}
           />
         ))}
       </div>
@@ -52,13 +55,14 @@ const Sidebar = (props: SidebarProps) => {
             <IconPlus size={13} />
           </Button>
         </div>
-        {tags.map((tags) => (
+        {tags.map((tag) => (
           <Anchor
-            key={tags.id}
+            key={tag.id}
             to='#'
             icon={<IconTag size={16} />}
-            text={tags.name}
-            isActive={false}
+            text={tag.name}
+            isActive={props.tab === tag.slug ? true : false}
+            select={props.selectTab}
           />
         ))}
       </div>

@@ -58,7 +58,7 @@ $allUsers = User::withoutGlobalScope('active')->get(); // Retrieves all users wi
       },
     ],
     tags: ["hashmap", "rust"],
-    isFavourite: false,
+    isFavourite: true,
   },
   {
     id: "3",
