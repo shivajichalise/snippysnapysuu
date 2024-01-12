@@ -3,6 +3,7 @@ import snippets from "../config/snippets"
 import LeftContentProps from "../types/LeftContentProps"
 import Card from "./Card"
 import InputText from "./InputText.tsx"
+import Loader from "./Loader.tsx"
 
 const LeftContent = (props: LeftContentProps) => {
   const [searchParams] = useState(["title", "tags"])
@@ -11,6 +12,7 @@ const LeftContent = (props: LeftContentProps) => {
   const [listFavouriteSnippets, setListFavouriteSnippets] = useState(false)
   const [selectedTypeOfSnippets, setSelectedTypeOfSnippets] =
     useState("snippets")
+  const [showLoader, setShowLoader] = useState(true)
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value)
@@ -60,25 +62,40 @@ const LeftContent = (props: LeftContentProps) => {
     )
   }, [searchQuery, listFavouriteSnippets, selectedTypeOfSnippets, props.toShow])
 
+  useState(() => {
+    const timeoutId = setTimeout(() => {
+      setShowLoader(false)
+    }, 5000)
+
+    // Cleanup the timeout to avoid unnecessary updates
+    return () => clearTimeout(timeoutId)
+  })
+
   return (
-    <div className='flex h-[calc(100vh-3.5rem)] flex-col overflow-y-scroll p-4'>
-      <div className='mb-4'>
-        <InputText
-          name='search'
-          id='search-snippet'
-          placeholder='Search snippet...'
-          onChange={handleOnChange}
-        />
-      </div>
-      <div className='flex w-96 flex-col gap-4'>
-        {snippetsList.map((snippet) => (
-          <Card
-            key={snippet.id}
-            snippet={snippet}
-            handleClick={props.handleClick}
-          />
-        ))}
-      </div>
+    <div className='border-200 flex h-[calc(100vh-3.5rem)] flex-col overflow-y-scroll border-r p-4'>
+      {showLoader ? (
+        <Loader />
+      ) : (
+        <>
+          <div className='mb-4'>
+            <InputText
+              name='search'
+              id='search-snippet'
+              placeholder='Search snippet...'
+              onChange={handleOnChange}
+            />
+          </div>
+          <div className='flex w-96 flex-col gap-4'>
+            {snippetsList.map((snippet) => (
+              <Card
+                key={snippet.id}
+                snippet={snippet}
+                handleClick={props.handleClick}
+              />
+            ))}
+          </div>
+        </>
+      )}
     </div>
   )
 }
