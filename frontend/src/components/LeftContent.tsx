@@ -9,6 +9,8 @@ const LeftContent = (props: LeftContentProps) => {
   const [searchQuery, setSearchQuery] = useState("")
   const [snippetsList, setSnippetsList] = useState(snippets)
   const [listFavouriteSnippets, setListFavouriteSnippets] = useState(false)
+  const [selectedTypeOfSnippets, setSelectedTypeOfSnippets] =
+    useState("snippets")
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value)
@@ -21,6 +23,18 @@ const LeftContent = (props: LeftContentProps) => {
   }, [props.toShow])
 
   useEffect(() => {
+    setSelectedTypeOfSnippets(props.type)
+  }, [props.type, props.toShow])
+
+  useEffect(() => {
+    const matchSearchParam = (snippet: any) =>
+      searchParams.some((param) =>
+        snippet[param]
+          .toString()
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase()),
+      )
+
     setSnippetsList(
       // filter based on input text and the params
       snippets.filter((snippet) => {
@@ -28,15 +42,23 @@ const LeftContent = (props: LeftContentProps) => {
           return false
         }
 
-        return searchParams.some((param) =>
-          (snippet as any)[param]
-            .toString()
-            .toLowerCase()
-            .includes(searchQuery.toLowerCase()),
-        )
+        if (selectedTypeOfSnippets === "tag") {
+          return (
+            snippet.tags.includes(props.toShow) && matchSearchParam(snippet)
+          )
+        }
+
+        if (selectedTypeOfSnippets === "collection") {
+          return (
+            snippet.collections.includes(props.toShow) &&
+            matchSearchParam(snippet)
+          )
+        }
+
+        return matchSearchParam(snippet)
       }),
     )
-  }, [searchQuery, listFavouriteSnippets])
+  }, [searchQuery, listFavouriteSnippets, selectedTypeOfSnippets, props.toShow])
 
   return (
     <div className='flex h-[calc(100vh-3.5rem)] flex-col overflow-y-scroll p-4'>

@@ -34,11 +34,12 @@ $allUsers = User::withoutGlobalScope('active')->get(); // Retrieves all users wi
       },
     ],
     tags: ["laravel", "eloquent"],
+    collections: ["laravel", "php"],
     isFavourite: true,
   },
   {
     id: "2",
-    title: "Find max value from a hashmap in rust.",
+    title: "Find max value from a hashmap in rust in memory safe.",
     description: "Finding max value from a hasmap",
     snippets: [
       {
@@ -58,11 +59,12 @@ $allUsers = User::withoutGlobalScope('active')->get(); // Retrieves all users wi
       },
     ],
     tags: ["hashmap", "rust"],
+    collections: ["memory_safe", "low_level"],
     isFavourite: true,
   },
   {
     id: "3",
-    title: "Convert hashmap into vector.",
+    title: "Convert hashmap into vector blazingly fast.",
     description: "Convert a hasmap into a vector in rust",
     snippets: [
       {
@@ -82,6 +84,7 @@ $allUsers = User::withoutGlobalScope('active')->get(); // Retrieves all users wi
       },
     ],
     tags: ["hashmap", "rust", "vector"],
+    collections: ["blazingly_fast"],
     isFavourite: false,
   },
 ]

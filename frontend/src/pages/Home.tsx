@@ -5,9 +5,11 @@ import Sidebar from "../components/Sidebar"
 
 const Home = () => {
   const [selectedTab, setSelectedTab] = useState("snippets")
+  const [selectedType, setSelectedType] = useState("snippets")
 
-  const selectTab = (tab: string) => {
+  const selectTab = (tab: string, type: string) => {
     setSelectedTab(tab)
+    setSelectedType(type)
   }
 
   return (
@@ -15,7 +17,7 @@ const Home = () => {
       <Navbar />
       <div className='flex'>
         <Sidebar tab={selectedTab} selectTab={selectTab} />
-        <Content show={selectedTab} />
+        <Content show={selectedTab} type={selectedType} />
       </div>
     </>
   )

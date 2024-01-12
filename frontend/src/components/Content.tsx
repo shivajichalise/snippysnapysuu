@@ -16,7 +16,11 @@ const Content = (props: ContentProps) => {
 
   return (
     <div className='bg-300 flex flex-1'>
-      <LeftContent handleClick={handleClick} toShow={props.show} />
+      <LeftContent
+        handleClick={handleClick}
+        toShow={props.show}
+        type={props.type}
+      />
       <RightContent
         id={snippetId}
         clearSelectedSnippet={clearSelectedSnippet}

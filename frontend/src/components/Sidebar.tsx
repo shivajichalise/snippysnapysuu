@@ -20,14 +20,14 @@ const Sidebar = (props: SidebarProps) => {
           icon={<IconSourceCode size={16} />}
           text='Snippets'
           isActive={props.tab === "snippets" ? true : false}
-          select={props.selectTab}
+          select={() => props.selectTab("snippets", "snippets")}
         />
         <Anchor
           to='#'
           icon={<IconStarsFilled size={16} />}
           text='Favourites'
           isActive={props.tab === "favourites" ? true : false}
-          select={props.selectTab}
+          select={() => props.selectTab("favourites", "favourites")}
         />
       </div>
       <div className='mb-4'>
@@ -44,7 +44,7 @@ const Sidebar = (props: SidebarProps) => {
             icon={<IconFolderFilled size={16} />}
             text={collection.name}
             isActive={props.tab === collection.slug ? true : false}
-            select={props.selectTab}
+            select={() => props.selectTab(collection.slug, "collection")}
           />
         ))}
       </div>
@@ -62,7 +62,7 @@ const Sidebar = (props: SidebarProps) => {
             icon={<IconTag size={16} />}
             text={tag.name}
             isActive={props.tab === tag.slug ? true : false}
-            select={props.selectTab}
+            select={() => props.selectTab(tag.slug, "tag")}
           />
         ))}
       </div>
