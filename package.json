@@ -2,12 +2,12 @@
   "name": "snippysnapysuu",
   "version": "1.0.0",
   "description": "A code snippet app.",
-  "main": "server.ts",
+  "main": "main.ts",
   "scripts": {
-    "start": "node backend/server",
-    "server": "npx nodemon backend/server",
+    "start": "ts-node backend/src/main.ts",
+    "server": "npx nodemon backend/src/main.ts",
     "client": "npm run dev --prefix frontend",
-    "dev": "npm run client"
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",

@@ -88,7 +88,7 @@ $allUsers = User::withoutGlobalScope('active')->get(); // Retrieves all users wi
     isFavourite: false,
   },
   {
-    id: "1",
+    id: "4",
     title: "Overwrite laravel eloquent builder.",
     description:
       "Overwriting builder query in laravel model to set some defaule conditions",

@@ -65,7 +65,7 @@ const LeftContent = (props: LeftContentProps) => {
   useState(() => {
     const timeoutId = setTimeout(() => {
       setShowLoader(false)
-    }, 5000)
+    }, 1000)
 
     // Cleanup the timeout to avoid unnecessary updates
     return () => clearTimeout(timeoutId)
@@ -75,7 +75,7 @@ const LeftContent = (props: LeftContentProps) => {
     <div className='border-200 flex h-[calc(100vh-3.5rem)] flex-col overflow-y-scroll border-r p-4'>
       {showLoader ? (
         <Loader />
-      ) : (
+      ) : snippetsList.length > 0 ? (
         <>
           <div className='mb-4'>
             <InputText
@@ -95,6 +95,10 @@ const LeftContent = (props: LeftContentProps) => {
             ))}
           </div>
         </>
+      ) : (
+        <div className='flex h-full w-96 items-center justify-center'>
+          <h1 className='text-100'>No snippets found :( </h1>
+        </div>
       )}
     </div>
   )

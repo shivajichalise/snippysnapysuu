@@ -1,4 +1,17 @@
 import "dotenv/config"
-import connectDB from "./config/db"
+import express from "express"
+import authRoutes from './routes/authRoutes'
 
-connectDB()
+const app = express()
+
+app.get('/', (req, res) => {
+    res.send('Hello world')
+})
+
+app.use(authRoutes)
+
+const port = process.env.PORT || 3000
+
+app.listen(port, () => {
+    console.log('listening')
+})
