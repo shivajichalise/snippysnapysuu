@@ -15,7 +15,7 @@ export function find(id: string){
 export async function emailExists(email: string){
     const e = await sql`SELECT email FROM users WHERE email = ${ email }`
 
-    if(e){
+    if(e.length > 0){
         return true
     }
     return false

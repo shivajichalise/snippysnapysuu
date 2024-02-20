@@ -5,34 +5,64 @@ import User from "../models/User"
 import sql from "../config/db"
 import { v4 as uuidv4 } from 'uuid';
 import {Request, Response} from 'express'
+import { ValidationError, validationResult } from "express-validator"
+import HttpResponsesParams from "../types/HttpResponsesParams"
+
+// WRITE TESTS
 
 // @desc    Register a user
-// @route   Post /api/users/
+// @route   Post /api/auth/register
 // @access  Public
 export async function registerUser(req: Request, res: Response) {
+    const result = validationResult(req);
+    if (!result.isEmpty()) {
+        const validationErrorParams: HttpResponsesParams<Record<string, ValidationError>> = {
+            res: res,
+            data: result.mapped(),
+            message: "Validation failed.",
+            code: 403
+        }
+        return error(validationErrorParams);
+    }
+
     const {name, email, password} = req.body
 
-    const userExists: boolean = await emailExists(email)
+    const userExists = await emailExists(email)
 
     if(userExists){
-        error(res, [], 'User with email already exists!', 409)
+        const errorParams: HttpResponsesParams<[]> = {
+            res: res,
+            data: [],
+            message: "User with email already exists.",
+            code: 409
+        }
+        return error(errorParams);
     }
 
     const salt = await bcrypt.genSalt(10)
     const hashedPassword: string = await bcrypt.hash(password, salt)
 
-    const userObj: User = {
-        id: uuidv4(),
-        name: name,
-        email: email,
-        password: hashedPassword
+    const user = await sql<User[]>`
+        INSERT INTO users (id, name, email, password)
+        VALUES (${uuidv4()}, ${name}, ${email}, ${hashedPassword})
+        RETURNING id, name, email
+        `
+
+    if(user.length > 0){
+        const successParams: HttpResponsesParams<User> = {
+            res: res,
+            data: user[0],
+            message: "Account created successfully.",
+            code: 200
+        }
+        return success(successParams)
     }
 
-    const user = await sql`INSERT INTO users ${ sql(userObj) }`
-
-    if(user){
-        success(res, [user], 'User created successfully!', 200)
-    }else{
-        error(res, [], 'Error creating user!', 500)
+    const errorParams: HttpResponsesParams<[]> = {
+        res: res,
+        data: [],
+        message: "Account creation failed.",
+        code: 500
     }
+    return error(errorParams)
 }
