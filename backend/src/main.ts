@@ -22,8 +22,4 @@ app.get('/api', (_, res) => {
 
 app.use('/api/auth', authRoutes)
 
-const port = process.env.PORT || 3000
-
-app.listen(port, () => {
-    console.log('listening')
-})
+export default app

@@ -49,9 +49,9 @@ export async function registerUser(req: Request, res: Response) {
         `
 
     if(user.length > 0){
-        const successParams: HttpResponsesParams<User> = {
+        const successParams: HttpResponsesParams<{user: User}> = {
             res: res,
-            data: user[0],
+            data: {user: user[0]},
             message: "Account created successfully.",
             code: 200
         }

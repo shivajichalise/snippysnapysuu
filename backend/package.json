@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Backend for Snipy Snapy Suu",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "",
   "license": "MIT",
@@ -18,8 +18,11 @@
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
     "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.12",
     "@types/node": "^20.11.5",
     "@types/uuid": "^9.0.8",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2",
     "typescript": "^5.3.3"
   }
 }
