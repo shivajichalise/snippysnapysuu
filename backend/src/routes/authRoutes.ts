@@ -1,5 +1,5 @@
 import express from "express"
-import { registerUser } from "../controllers/authController"
+import { loginUser, registerUser } from "../controllers/authController"
 import { checkSchema } from "express-validator"
 
 const router = express.Router()
@@ -27,12 +27,23 @@ router.post('/register',
     registerUser
 )
 
-router.route('/login').get((req, res) => {
-    res.json('register')
-})
+router.post('/login',
+    checkSchema({
+        email: {
+            notEmpty: true,
+            errorMessage: 'Invalid email address.',
+            isEmail: true,
+        },
+        password: {
+            notEmpty: true,
+            errorMessage: 'Password field is required.',
+        },
+    }), 
+    loginUser
+)
 
-router.route('/login').get((req, res) => {
-    res.json('register')
+router.post('/logout', (req, res) => {
+    res.json('logout')
 })
 
 export default router

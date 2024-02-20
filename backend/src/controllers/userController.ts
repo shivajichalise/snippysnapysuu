@@ -20,3 +20,16 @@ export async function emailExists(email: string){
     }
     return false
 }
+
+// @desc    Find user by email
+// @route   Post /api/users/:email
+// @access  Public
+export async function findByEmail(email: string){
+    const user = await sql<User[]>`SELECT id, name, email, password FROM users WHERE email = ${ email }`
+
+    if(user.length > 0){
+        return user[0]
+    }
+
+    return null
+}
