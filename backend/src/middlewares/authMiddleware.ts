@@ -1,4 +1,3 @@
-import "dotenv/config"
 import { verify, JwtPayload } from 'jsonwebtoken';
 import {Request, Response, NextFunction} from 'express'
 import { error } from "../utils/httpResponses"
