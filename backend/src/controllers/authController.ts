@@ -7,7 +7,6 @@ import { v4 as uuidv4 } from 'uuid';
 import {Request, Response} from 'express'
 import { ValidationError, validationResult } from "express-validator"
 import HttpResponsesParams from "../types/HttpResponsesParams"
-import jwt from "jsonwebtoken"
 import generateToken from "../utils/generateToken"
 
 // WRITE TESTS
@@ -105,8 +104,8 @@ export async function loginUser(req: Request, res: Response) {
 
         if(isPasswordValid){
 
-            const token = generateToken(user)
-            user.token = token
+            const token = generateToken(user.id)
+            res.cookie('jwt', token, { httpOnly: true, maxAge: 3 * 24 * 60 * 60 * 1000 })
             
             const successParams: HttpResponsesParams<{user: User}> = {
                 res: res,
@@ -126,4 +125,18 @@ export async function loginUser(req: Request, res: Response) {
 
         return error(credentialsErrorParams);
     }
+}
+
+// @desc    Logout a user
+// @route   Post /api/auth/logout
+// @access  Protected
+export async function logoutUser(_: Request, res: Response) {
+    res.cookie('jwt', "", { maxAge: 1 })
+    const successParams: HttpResponsesParams<[]> = {
+        res: res,
+        data: [],
+        message: "Logged out successfully.",
+        code: 200
+    }
+    return success(successParams)
 }

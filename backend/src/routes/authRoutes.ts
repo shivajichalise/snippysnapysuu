@@ -1,6 +1,7 @@
 import express from "express"
-import { loginUser, registerUser } from "../controllers/authController"
+import { loginUser, registerUser, logoutUser } from "../controllers/authController"
 import { checkSchema } from "express-validator"
+import { checkJwt } from "../middlewares/authMiddleware"
 
 const router = express.Router()
 
@@ -42,8 +43,9 @@ router.post('/login',
     loginUser
 )
 
-router.post('/logout', (req, res) => {
-    res.json('logout')
-})
+router.post('/logout', 
+    [checkJwt], 
+    logoutUser
+)
 
 export default router

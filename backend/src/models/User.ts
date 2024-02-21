@@ -5,7 +5,6 @@ interface User {
     password: string
     createdAt?: Date
     updatedAt?: Date
-    token?: string
 }
 
 export default User
