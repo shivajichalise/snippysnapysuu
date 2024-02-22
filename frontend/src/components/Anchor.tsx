@@ -7,7 +7,7 @@ const Anchor = (props: AnchorProps) => {
       to={props.to}
       className={`${
         props.isActive ? "bg-200 shadow-inner" : ""
-      } my-0.5 text-text-200 hover:bg-200 hover:text-text block w-full cursor-pointer rounded-md p-2`}
+      } text-text-200 hover:bg-200 hover:text-text my-0.5 block w-full cursor-pointer rounded-md p-2`}
       onClick={() => props.select()}
     >
       <div className='flex items-center justify-start'>

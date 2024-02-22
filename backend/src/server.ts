@@ -1,7 +1,10 @@
 import app from "./main"
 
-const port = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000
 
-app.listen(port, () => {
-    console.log('listening')
-})
+app.listen(
+    PORT,
+    () => {
+        console.log(`Server running in ${process.env.ENV} mode on port ${PORT}`)
+    }
+)

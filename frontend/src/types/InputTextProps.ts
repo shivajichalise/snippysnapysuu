@@ -1,8 +1,10 @@
 import { ChangeEvent } from "react"
 
 interface InputTextProps {
+  inputLabel?: string
+  hasLabel?: boolean
   name: string
-  placeholder: string
+  placeholder?: string
   id: string
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
