@@ -17,9 +17,9 @@ import generateToken from "../utils/generateToken"
 export async function registerUser(req: Request, res: Response) {
     const result = validationResult(req);
     if (!result.isEmpty()) {
-        const validationErrorParams: HttpResponsesParams<Record<string, ValidationError>> = {
+        const validationErrorParams: HttpResponsesParams<ValidationError[]> = {
             res: res,
-            data: result.mapped(),
+            data: result.array(),
             message: "Validation failed.",
             code: 403
         }

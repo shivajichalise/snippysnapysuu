@@ -8,6 +8,7 @@ import App from "./App.tsx"
 import GuestPage from "./pages/GuestPage.tsx"
 import Login from "./pages/Login.tsx"
 import LandingPage from "./pages/LandingPage.tsx"
+import Signup from "./pages/Signup.tsx"
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: '/login',
         element: <Login />
+      },
+      {
+        path: '/signup',
+        element: <Signup />
       },
     ]
   },

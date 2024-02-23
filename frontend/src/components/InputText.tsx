@@ -1,6 +1,7 @@
+import { forwardRef } from "react"
 import InputTextProps from "../types/InputTextProps"
 
-const InputText = (props: InputTextProps) => {
+const InputText = forwardRef<HTMLInputElement, InputTextProps>((props, ref) => {
     const {id, name, placeholder, onChange, hasLabel, inputLabel} = props
 
     return (
@@ -17,9 +18,10 @@ const InputText = (props: InputTextProps) => {
                 name={name}
                 placeholder={placeholder}
                 onChange={onChange}
+                ref={ref}
             />
         </div>
     )
-}
+})
 
 export default InputText
