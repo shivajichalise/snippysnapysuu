@@ -74,9 +74,9 @@ export async function registerUser(req: Request, res: Response) {
 export async function loginUser(req: Request, res: Response) {
     const result = validationResult(req);
     if (!result.isEmpty()) {
-        const validationErrorParams: HttpResponsesParams<Record<string, ValidationError>> = {
+        const validationErrorParams: HttpResponsesParams<ValidationError[]> = {
             res: res,
-            data: result.mapped(),
+            data: result.array(),
             message: "Validation failed.",
             code: 403
         }
@@ -105,11 +105,10 @@ export async function loginUser(req: Request, res: Response) {
         if(isPasswordValid){
 
             const token = generateToken(user.id)
-            res.cookie('jwt', token, { httpOnly: true, maxAge: 3 * 24 * 60 * 60 * 1000 })
             
-            const successParams: HttpResponsesParams<{user: User}> = {
+            const successParams: HttpResponsesParams<{user: User, token: string}> = {
                 res: res,
-                data: {user: user},
+                data: {user: user, token: token},
                 message: "Logged in successfully.",
                 code: 200
             }
@@ -131,7 +130,6 @@ export async function loginUser(req: Request, res: Response) {
 // @route   Post /api/auth/logout
 // @access  Protected
 export async function logoutUser(_: Request, res: Response) {
-    res.cookie('jwt', "", { maxAge: 1 })
     const successParams: HttpResponsesParams<[]> = {
         res: res,
         data: [],

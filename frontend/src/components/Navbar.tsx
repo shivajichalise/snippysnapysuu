@@ -5,13 +5,10 @@ import UserProfileMenu from "./UserProfileMenu"
 import logo from "../assets/logo.png"
 import AppMenu from "./AppMenu"
 import { useStateContext } from "../contexts/ContextProvider"
-import Button from "./Button"
-import { IconLogin } from "@tabler/icons-react"
-import Anchor from "./Anchor"
 import { Link } from "react-router-dom"
 
 const Navbar = () => {
-    const { user } = useStateContext()
+    const { token } = useStateContext()
     const [openModal, setOpenModal] = useState<boolean>(false)
     const [modalPosition, setModalPosition] = useState<"right" | "left">("right")
 
@@ -63,7 +60,7 @@ const Navbar = () => {
                     showText={false}
                     toggleModal={() => toggleModal("left")}
                 />
-                {user ? (
+                {token ? (
                     <Menu
                         image={image}
                         text={text}

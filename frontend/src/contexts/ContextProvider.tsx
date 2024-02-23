@@ -6,7 +6,7 @@ type ContextData = {
     user: User | null,
     token: string | null,
     setUser: Dispatch<SetStateAction<User | null>>,
-    setToken: (token: string) => void,
+    setToken: (token: string|null) => void,
 }
 
 const initialState: ContextData = {
@@ -22,7 +22,7 @@ export const ContextProvider = ({ children }: ContextProviderProps) => {
     const [user, setUser] = useState<User|null>(null)
     const [token, _setToken] = useState(localStorage.getItem('ACCESS_TOKEN'))
 
-    function setToken(token: string) {
+    function setToken(token: string|null) {
         _setToken(token)
 
         if(token){

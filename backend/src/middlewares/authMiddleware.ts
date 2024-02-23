@@ -8,7 +8,8 @@ export interface CustomRequest extends Request {
 }
 
 export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
-    const token = req.cookies.jwt;
+    const authHeader = req.headers['authorization']
+    const token = authHeader ? authHeader.split(' ')[1] : ''
     
     let jwtPayload;
 

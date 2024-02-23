@@ -1,9 +1,8 @@
-import { Link } from "react-router-dom"
+import { Link, Navigate } from "react-router-dom"
 import InputSubmit from "../components/InputSubmit"
 import InputText from "../components/InputText"
 import Logo from "../components/Logo"
 import { FormEvent, useEffect, useRef, useState } from "react"
-import { useStateContext } from "../contexts/ContextProvider"
 import axiosClient from "../axios-client"
 import ValidationError from "../types/ValidationError"
 import SpanAlert from "../components/SpanAlert"
@@ -19,8 +18,6 @@ const Signup = () => {
     const [emailError, setEmailError] = useState<ValidationError>()
     const [passwordError, setPasswordError] = useState<ValidationError>()
     const [confirmPasswordError, setConfirmPasswordError] = useState<ValidationError>()
-
-    const { setUser, setToken } = useStateContext()
 
     const submitForm = (e: FormEvent) => {
         e.preventDefault()
@@ -39,9 +36,8 @@ const Signup = () => {
             }
 
             axiosClient.post('/auth/register', payload)
-                .then(({data}) => {
-                    setUser(data.user)
-                    setToken(data.token)
+                .then(() => {
+                    return <Navigate to="/login" />
                 })
                 .catch((err) => {
                     const response = err.response
@@ -51,7 +47,7 @@ const Signup = () => {
                 })
 
         } else {
-            console.error(nameRef, emailRef, passwordRef, confirmPasswordRef);
+            console.error("");
         }
 
     }
@@ -75,16 +71,16 @@ const Signup = () => {
                                 className='bg-200 w-full rounded-md p-6 text-white'
                             >
                                 <form onSubmit={submitForm}>
-                                    <InputText ref={nameRef} name="name" id="name" placeholder="User Jr White" hasLabel={true} inputLabel="Email" />
+                                    <InputText ref={nameRef} name="name" id="name" placeholder="User Jr White" hasLabel={true} inputLabel="Name" required={true} />
                                     { nameError && <SpanAlert type="error" message={nameError.msg} /> }
 
-                                    <InputText ref={emailRef} name="email" id="email" placeholder="user@email.com" hasLabel={true} inputLabel="Email" />
+                                    <InputText ref={emailRef} type="email" name="email" id="email" placeholder="user@email.com" hasLabel={true} inputLabel="Email" required={true} />
                                     { emailError && <SpanAlert type="error" message={emailError.msg} /> }
 
-                                    <InputText ref={passwordRef} name="password" id="password" placeholder="********" hasLabel={true} inputLabel="Password" />
+                                    <InputText ref={passwordRef} type="password" name="password" id="password" placeholder="********" hasLabel={true} inputLabel="Password" required={true}/>
                                     { passwordError && <SpanAlert type="error" message={passwordError.msg} /> }
 
-                                    <InputText ref={confirmPasswordRef} name="password_confirmation" id="password_confirmation" placeholder="********" hasLabel={true} inputLabel="Confirm password" />
+                                    <InputText ref={confirmPasswordRef} type="password" name="password_confirmation" id="password_confirmation" placeholder="********" hasLabel={true} inputLabel="Confirm password" required={true}/>
                                     { confirmPasswordError && <SpanAlert type="error" message={confirmPasswordError.msg} /> }
 
                                     <InputSubmit value="Signup" />

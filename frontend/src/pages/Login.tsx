@@ -2,8 +2,62 @@ import { Link } from "react-router-dom"
 import InputSubmit from "../components/InputSubmit"
 import InputText from "../components/InputText"
 import Logo from "../components/Logo"
+import { FormEvent, useEffect, useRef, useState } from "react"
+import ValidationError from "../types/ValidationError"
+import axiosClient from "../axios-client"
+import SpanAlert from "../components/SpanAlert"
+import { useStateContext } from "../contexts/ContextProvider"
 
 const Login = () => {
+    const emailRef = useRef<HTMLInputElement>(null)
+    const passwordRef = useRef<HTMLInputElement>(null)
+
+    const [errors, setErrors] = useState<ValidationError[]>([])
+    const [emailError, setEmailError] = useState<ValidationError>()
+    const [passwordError, setPasswordError] = useState<ValidationError>()
+
+    const [loginError, setLoginError] = useState<string|null>(null)
+
+    const { setUser, setToken } = useStateContext()
+
+    const submitForm = (e: FormEvent) => {
+        e.preventDefault()
+
+        if (
+                emailRef.current &&
+                passwordRef.current
+        ) {
+            const payload = {
+                email: emailRef.current.value,
+                password: passwordRef.current.value,
+            }
+
+            axiosClient.post('/auth/login', payload)
+                .then(({ data }) => {
+                    const user = data.data.user
+                    const token = data.data.token
+
+                    setUser(user)
+                    setToken(token)
+                })
+                .catch((err) => {
+                    const response = err.response
+                    if(response && response.status === 403){
+                        setErrors(response.data.data)
+                        setLoginError(response.data.message)
+                    }
+                })
+
+        } else {
+            console.error("");
+        }
+    }
+
+    useEffect(() => {
+        setEmailError(errors.find(e => e.path === "email"))
+        setPasswordError(errors.find(e => e.path === "password"))
+    }, [errors])
+
     return (
         <>
             <div className='bg-300 flex flex-1'>
@@ -15,9 +69,14 @@ const Login = () => {
                             <div
                                 className='bg-200 rounded-md p-6 text-white'
                             >
-                                <form method="POST" action="/api/login">
-                                    <InputText name="email" id="email" placeholder="user@email.com" onChange={() => console.log(1)} hasLabel={true} inputLabel="Email" />
-                                    <InputText name="password" id="password" placeholder="********" onChange={() => console.log(1)} hasLabel={true} inputLabel="Password" />
+                                <form onSubmit={submitForm}>
+                                    <InputText ref={emailRef} type="email" name="email" id="email" placeholder="user@email.com" hasLabel={true} inputLabel="Email" required={true} />
+                                    { emailError && <SpanAlert type="error" message={emailError.msg} /> }
+                                    { loginError && <SpanAlert type="error" message={loginError} /> }
+
+                                    <InputText ref={passwordRef} type="password" name="password" id="password" placeholder="********" hasLabel={true} inputLabel="Password" required={true}/>
+                                    { passwordError && <SpanAlert type="error" message={passwordError.msg} /> }
+
                                     <InputSubmit value="Login" />
                                 </form>
                             </div>
