@@ -6,6 +6,7 @@ import HttpResponsesParams from "./types/HttpResponsesParams"
 import bodyParser from "body-parser"
 import cookieParser from "cookie-parser"
 import cors from "cors"
+import setupDB from "./config/setupDB"
 
 const app = express()
 app.use(express.json())
@@ -17,6 +18,8 @@ app.use(cors({
     credentials: true,
     origin: "http://localhost:5173",
 }))
+
+setupDB()
 
 app.get('/api', (_, res) => {
     const params: HttpResponsesParams<[]> = {
