@@ -4,29 +4,32 @@ import RightContent from "./RightContent"
 import ContentProps from "../types/ContentProps"
 
 const Content = (props: ContentProps) => {
-  const [snippetId, setSnippetId] = useState("0")
+    const [snippetId, setSnippetId] = useState("0")
 
-  const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    setSnippetId(e.currentTarget.id)
-  }
+    const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        setSnippetId(e.currentTarget.id)
+    }
 
-  const clearSelectedSnippet = () => {
-    setSnippetId("0")
-  }
+    const clearSelectedSnippet = () => {
+        setSnippetId("0")
+    }
 
-  return (
-    <div className='bg-300 flex flex-1'>
-      <LeftContent
-        handleClick={handleClick}
-        toShow={props.show}
-        type={props.type}
-      />
-      <RightContent
-        id={snippetId}
-        clearSelectedSnippet={clearSelectedSnippet}
-      />
-    </div>
-  )
+    return (
+        <>
+            <div className='bg-300 flex flex-1'>
+                <LeftContent
+                    handleClick={handleClick}
+                    toShow={props.show}
+                    type={props.type}
+                    toggleModal={props.toggleModal}
+                />
+                <RightContent
+                    id={snippetId}
+                    clearSelectedSnippet={clearSelectedSnippet}
+                />
+            </div>
+        </>
+    )
 }
 
 export default Content

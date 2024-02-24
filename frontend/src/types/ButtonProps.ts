@@ -1,9 +1,11 @@
 import { ReactElement } from "react"
 
 interface ButtonProps {
-  type: "primary" | "secondary" | "accent" | "error" | "warning" | "info"
-  onClick: (() => void ) | ((e: MouseEvent) => void)
-  children: ReactElement
+    icon?: ReactElement | null
+    type: "primary" | "secondary" | "accent" | "error" | "warning" | "info"
+    onClick: (() => void) | ((e: MouseEvent) => void)
+    text?: string
+    children?: ReactElement
 }
 
 export default ButtonProps

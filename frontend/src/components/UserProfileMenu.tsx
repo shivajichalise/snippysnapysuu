@@ -4,9 +4,10 @@ import Anchor from "./Anchor"
 import Button from "./Button"
 import { IconX, IconLogout, IconUser, IconUserCog } from "@tabler/icons-react"
 import { useStateContext } from "../contexts/ContextProvider"
+import IconButton from "./IconButton"
 
 const UserProfileMenu = (props: UserProfileMenuProps) => {
-    const { setUser, setToken} = useStateContext()
+    const { setUser, setToken } = useStateContext()
 
     function logout(e: MouseEvent){
         e.preventDefault()
@@ -27,11 +28,11 @@ const UserProfileMenu = (props: UserProfileMenuProps) => {
     return (
         <div className='flex h-full flex-col justify-between'>
             <div className='flex flex-col'>
-                <div className='flex items-center justify-between'>
+                <div className='flex w-full items-center justify-center'>
                     {props.children}
-                    <Button type='primary' onClick={props.toggleModal}>
-                        <IconX size={15} className='m-1' />
-                    </Button>
+                    <IconButton type='primary' onClick={props.toggleModal}>
+                        <IconX size={15} />
+                    </IconButton>
                 </div>
                 <hr className='bg-300 my-3 h-px w-full rounded-lg border-0' />
                 <div>
@@ -48,9 +49,7 @@ const UserProfileMenu = (props: UserProfileMenuProps) => {
                 </div>
             </div>
             <div>
-                    <Button type='primary' onClick={logout}>
-                        <IconLogout size={15} className='m-1' />
-                    </Button>
+                <Button type='primary' text="Logout" onClick={logout} icon={<IconLogout size={15} />} />
             </div>
         </div>
     )

@@ -50,9 +50,10 @@ export async function registerUser(req: Request, res: Response) {
         `
 
     if(user.length > 0){
-        const successParams: HttpResponsesParams<{user: User}> = {
+        const token = generateToken(user[0].id)
+        const successParams: HttpResponsesParams<{user: User, token: string}> = {
             res: res,
-            data: {user: user[0]},
+            data: {user: user[0], token: token},
             message: "Account created successfully.",
             code: 200
         }

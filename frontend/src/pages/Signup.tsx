@@ -1,4 +1,4 @@
-import { Link, Navigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import InputSubmit from "../components/InputSubmit"
 import InputText from "../components/InputText"
 import Logo from "../components/Logo"
@@ -6,6 +6,7 @@ import { FormEvent, useEffect, useRef, useState } from "react"
 import axiosClient from "../axios-client"
 import ValidationError from "../types/ValidationError"
 import SpanAlert from "../components/SpanAlert"
+import { useStateContext } from "../contexts/ContextProvider"
 
 const Signup = () => {
     const nameRef = useRef<HTMLInputElement>(null)
@@ -18,6 +19,8 @@ const Signup = () => {
     const [emailError, setEmailError] = useState<ValidationError>()
     const [passwordError, setPasswordError] = useState<ValidationError>()
     const [confirmPasswordError, setConfirmPasswordError] = useState<ValidationError>()
+
+    const { setUser, setToken } = useStateContext()
 
     const submitForm = (e: FormEvent) => {
         e.preventDefault()
@@ -32,12 +35,16 @@ const Signup = () => {
                 name: nameRef.current.value,
                 email: emailRef.current.value,
                 password: passwordRef.current.value,
-                confirmPassword: confirmPasswordRef.current.value,
+                password_confirmation: confirmPasswordRef.current.value,
             }
 
             axiosClient.post('/auth/register', payload)
-                .then(() => {
-                    return <Navigate to="/login" />
+                .then(({ data }) => {
+                    const user = data.data.user
+                    const token = data.data.token
+
+                    setUser(user)
+                    setToken(token)
                 })
                 .catch((err) => {
                     const response = err.response

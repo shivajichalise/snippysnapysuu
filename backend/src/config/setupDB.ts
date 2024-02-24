@@ -49,7 +49,7 @@ async function createSnippetsTable(){
             collection_id UUID REFERENCES collections NULL,
             title VARCHAR(255),
             description VARCHAR(255),
-            tags JSONB,
+            tags VARCHAR(255) ARRAY,
             favourite BOOLEAN,
             created_at TIMESTAMP WITH TIME ZONE,
             updated_at TIMESTAMP WITH TIME ZONE

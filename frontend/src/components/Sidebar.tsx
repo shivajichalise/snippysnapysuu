@@ -16,7 +16,7 @@ const Sidebar = (props: SidebarProps) => {
     <div className='border-200 bg-300 flex h-[calc(100vh-(3.5rem))] w-64 flex-col border-r p-4'>
       <div className='mb-4'>
         <Anchor
-          to='/'
+          to='/home'
           icon={<IconSourceCode size={16} />}
           text='Snippets'
           isActive={props.tab === "snippets" ? true : false}
