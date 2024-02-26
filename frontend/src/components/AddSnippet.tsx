@@ -13,19 +13,21 @@ interface AddSnippetProps {
 
 const AddSnippet = (props: AddSnippetProps) => {
     return (
-        <div className='flex h-full flex-col justify-between'>
-            <div className='flex flex-col'>
-                <div className='flex w-full items-center justify-center'>
+        <div className="flex h-full flex-col justify-between">
+            <div className="flex flex-col">
+                <div className="flex w-full items-center justify-center">
                     <div className="flex w-full items-center justify-between">
                         <h1 className="text-lg">Add Snippet</h1>
-                        <IconButton type='primary' onClick={() => props.toggleModal()}>
+                        <IconButton
+                            type="primary"
+                            onClick={() => props.toggleModal()}
+                        >
                             <IconX size={15} className="m-1" />
                         </IconButton>
                     </div>
                 </div>
-                <hr className='bg-200 my-3 h-px w-full rounded-lg border-0' />
+                <hr className="bg-200 my-3 h-px w-full rounded-lg border-0" />
                 <form>
-
                     <InputText
                         name="title"
                         id="title"
@@ -54,7 +56,10 @@ const AddSnippet = (props: AddSnippetProps) => {
                         inputLabel="Tags"
                         required={true}
                     />
-                    <SpanAlert type="warning" message="Provide tags in comma-separated format" />
+                    <SpanAlert
+                        type="warning"
+                        message="Provide tags in comma-separated format"
+                    />
 
                     <InputSelect
                         name="language"
@@ -84,14 +89,16 @@ const AddSnippet = (props: AddSnippetProps) => {
                         inputLabel="Code description"
                         rows={4}
                     />
-                    <SpanAlert type="warning" message="Explain what the code does if you want." />
+                    <SpanAlert
+                        type="warning"
+                        message="Explain what the code does if you want."
+                    />
 
                     <InputSubmit value="Save" />
                 </form>
             </div>
         </div>
     )
-
 }
 
 export default AddSnippet
