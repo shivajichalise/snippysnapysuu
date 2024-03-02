@@ -6,12 +6,49 @@ import InputSubmit from "./InputSubmit"
 import InputTextArea from "./InputTextArea"
 import SpanAlert from "./SpanAlert"
 import programmingLanguages from "../assets/programmingLanguages"
+import { FormEvent, useEffect, useRef, useState } from "react"
+import axiosClient from "../axios-client"
+import ValidationError from "../types/ValidationError"
 
 interface AddSnippetProps {
     toggleModal: () => void
 }
 
 const AddSnippet = (props: AddSnippetProps) => {
+    const titleRef = useRef<HTMLInputElement>(null)
+    const [errors, setErrors] = useState<ValidationError[]>([])
+    const [addError, setAddError] = useState<string | null>(null)
+    const [titleError, setTitleError] = useState<string | null>(null)
+
+    const submitForm = (e: FormEvent) => {
+        e.preventDefault()
+
+        if (titleRef.current) {
+            const payload = {
+                title: titleRef.current.value,
+            }
+
+            axiosClient
+                .post("/snippets", payload)
+                .then(({ data }) => {
+                    // success
+                })
+                .catch((err) => {
+                    const response = err.response
+                    if (response && response.status === 403) {
+                        setErrors(response.data.data)
+                        setAddError(response.data.message)
+                    }
+                })
+        } else {
+            console.error("")
+        }
+    }
+
+    useEffect(() => {
+        setTitleError(titleError)
+    }, [errors])
+
     return (
         <div className="flex h-full flex-col justify-between">
             <div className="flex flex-col">
@@ -27,7 +64,7 @@ const AddSnippet = (props: AddSnippetProps) => {
                     </div>
                 </div>
                 <hr className="bg-200 my-3 h-px w-full rounded-lg border-0" />
-                <form>
+                <form onSubmit={submitForm}>
                     <InputText
                         name="title"
                         id="title"
