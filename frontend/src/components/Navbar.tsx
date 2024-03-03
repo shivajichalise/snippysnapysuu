@@ -10,7 +10,9 @@ import { Link } from "react-router-dom"
 const Navbar = () => {
     const { token } = useStateContext()
     const [openModal, setOpenModal] = useState<boolean>(false)
-    const [modalPosition, setModalPosition] = useState<"right" | "left">("right")
+    const [modalPosition, setModalPosition] = useState<"right" | "left">(
+        "right"
+    )
 
     const { user } = useStateContext()
 
@@ -23,7 +25,7 @@ const Navbar = () => {
         "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=80"
 
     let text = null
-    if(user){
+    if (user) {
         text = {
             title: user.email,
             description: user.name,
@@ -39,7 +41,9 @@ const Navbar = () => {
                 size="medium"
             >
                 {modalPosition === "right" ? (
-                    <UserProfileMenu toggleModal={() => toggleModal(modalPosition)}>
+                    <UserProfileMenu
+                        toggleModal={() => toggleModal(modalPosition)}
+                    >
                         <Menu
                             image={image}
                             text={text}
@@ -48,18 +52,18 @@ const Navbar = () => {
                         />
                     </UserProfileMenu>
                 ) : (
-                        <AppMenu toggleModal={() => toggleModal(modalPosition)}>
-                            <Menu
-                                image={logo}
-                                text={null}
-                                showText={false}
-                                toggleModal={() => null}
-                            />
-                        </AppMenu>
-                    )}
+                    <AppMenu toggleModal={() => toggleModal(modalPosition)}>
+                        <Menu
+                            image={logo}
+                            text={null}
+                            showText={false}
+                            toggleModal={() => null}
+                        />
+                    </AppMenu>
+                )}
             </Modal>
 
-            <nav className='bg-300 border-200 flex h-14 items-center justify-between border-b p-3'>
+            <nav className="bg-300 border-200 flex h-14 items-center justify-between border-b p-3">
                 <Menu
                     image={logo}
                     text={null}
@@ -74,22 +78,21 @@ const Navbar = () => {
                         toggleModal={() => toggleModal("right")}
                     />
                 ) : (
-                        <div className="flex">
-                            <Link
-                                to='/login'
-                                className='text-primary-200 mr-3 hover:opacity-75'
-                            >
-                                Login
-                            </Link>
-                            <Link
-                                to='/signup'
-                                className='text-primary-200 mr-3 hover:opacity-75'
-                            >
-                                Sign up
-                            </Link>
-                        </div>
-                    )
-                }
+                    <div className="flex">
+                        <Link
+                            to="/login"
+                            className="text-primary-200 mr-3 hover:opacity-75"
+                        >
+                            Login
+                        </Link>
+                        <Link
+                            to="/signup"
+                            className="text-primary-200 mr-3 hover:opacity-75"
+                        >
+                            Sign up
+                        </Link>
+                    </div>
+                )}
             </nav>
         </>
     )
