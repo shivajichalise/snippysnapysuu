@@ -13,31 +13,60 @@ import ValidationError from "../types/ValidationError"
 interface AddSnippetProps {
     toggleModal: () => void
 }
-
+;[]
 const AddSnippet = (props: AddSnippetProps) => {
     const titleRef = useRef<HTMLInputElement>(null)
+    const descriptionRef = useRef<HTMLTextAreaElement>(null)
+    const tagsRef = useRef<HTMLInputElement>(null)
+    const languageRef = useRef<HTMLSelectElement>(null)
+    const codeRef = useRef<HTMLTextAreaElement>(null)
+    const codeDescriptionRef = useRef<HTMLTextAreaElement>(null)
+
+    const [successMessage, setSuccessMessage] = useState<string | null>(null)
+
     const [errors, setErrors] = useState<ValidationError[]>([])
-    const [addError, setAddError] = useState<string | null>(null)
-    const [titleError, setTitleError] = useState<string | null>(null)
+
+    const [titleError, setTitleError] = useState<ValidationError>()
+    const [descriptionError, setDescriptionError] = useState<ValidationError>()
+    const [tagsError, setTagsError] = useState<ValidationError>()
+    const [languageError, setLanguageError] = useState<ValidationError>()
+    const [codeError, setCodeError] = useState<ValidationError>()
+    const [codeDescriptionError, setCodeDescriptionError] =
+        useState<ValidationError>()
 
     const submitForm = (e: FormEvent) => {
         e.preventDefault()
 
-        if (titleRef.current) {
+        if (
+            titleRef.current &&
+            descriptionRef.current &&
+            tagsRef.current &&
+            languageRef.current &&
+            codeRef.current &&
+            codeDescriptionRef.current
+        ) {
+            const tags = tagsRef.current.value
+                .split(",")
+                .map((tag) => tag.trim())
+
             const payload = {
                 title: titleRef.current.value,
+                description: descriptionRef.current.value,
+                tags: tags,
+                language: languageRef.current.value,
+                code: codeRef.current.value,
+                code_description: codeDescriptionRef.current.value,
             }
 
             axiosClient
                 .post("/snippets", payload)
                 .then(({ data }) => {
-                    // success
+                    setSuccessMessage(data.data.message)
                 })
                 .catch((err) => {
                     const response = err.response
                     if (response && response.status === 403) {
                         setErrors(response.data.data)
-                        setAddError(response.data.message)
                     }
                 })
         } else {
@@ -46,7 +75,14 @@ const AddSnippet = (props: AddSnippetProps) => {
     }
 
     useEffect(() => {
-        setTitleError(titleError)
+        setTitleError(errors.find((e) => e.path === "title"))
+        setDescriptionError(errors.find((e) => e.path === "description"))
+        setTagsError(errors.find((e) => e.path === "tags"))
+        setLanguageError(errors.find((e) => e.path === "language"))
+        setCodeError(errors.find((e) => e.path === "code"))
+        setCodeDescriptionError(
+            errors.find((e) => e.path === "code_description")
+        )
     }, [errors])
 
     return (
@@ -66,6 +102,7 @@ const AddSnippet = (props: AddSnippetProps) => {
                 <hr className="bg-200 my-3 h-px w-full rounded-lg border-0" />
                 <form onSubmit={submitForm}>
                     <InputText
+                        ref={titleRef}
                         name="title"
                         id="title"
                         placeholder="Title"
@@ -73,8 +110,12 @@ const AddSnippet = (props: AddSnippetProps) => {
                         inputLabel="Title"
                         required={true}
                     />
+                    {titleError && (
+                        <SpanAlert type="error" message={titleError.msg} />
+                    )}
 
                     <InputTextArea
+                        ref={descriptionRef}
                         type="description"
                         name="description"
                         id="description"
@@ -84,8 +125,15 @@ const AddSnippet = (props: AddSnippetProps) => {
                         required={true}
                         rows={3}
                     />
+                    {descriptionError && (
+                        <SpanAlert
+                            type="error"
+                            message={descriptionError.msg}
+                        />
+                    )}
 
                     <InputText
+                        ref={tagsRef}
                         name="tags"
                         id="tags"
                         placeholder="tag1,tag2,tag3"
@@ -93,12 +141,16 @@ const AddSnippet = (props: AddSnippetProps) => {
                         inputLabel="Tags"
                         required={true}
                     />
+                    {tagsError && (
+                        <SpanAlert type="error" message={tagsError.msg} />
+                    )}
                     <SpanAlert
                         type="warning"
                         message="Provide tags in comma-separated format"
                     />
 
                     <InputSelect
+                        ref={languageRef}
                         name="language"
                         id="language"
                         placeholder=""
@@ -107,8 +159,12 @@ const AddSnippet = (props: AddSnippetProps) => {
                         required={true}
                         options={programmingLanguages}
                     />
+                    {languageError && (
+                        <SpanAlert type="error" message={languageError.msg} />
+                    )}
 
                     <InputTextArea
+                        ref={codeRef}
                         name="code"
                         id="code"
                         placeholder="Code"
@@ -117,8 +173,12 @@ const AddSnippet = (props: AddSnippetProps) => {
                         required={true}
                         rows={6}
                     />
+                    {codeError && (
+                        <SpanAlert type="error" message={codeError.msg} />
+                    )}
 
                     <InputTextArea
+                        ref={codeDescriptionRef}
                         name="code_description"
                         id="code_description"
                         placeholder="Code description"
@@ -126,6 +186,12 @@ const AddSnippet = (props: AddSnippetProps) => {
                         inputLabel="Code description"
                         rows={4}
                     />
+                    {codeDescriptionError && (
+                        <SpanAlert
+                            type="error"
+                            message={codeDescriptionError.msg}
+                        />
+                    )}
                     <SpanAlert
                         type="warning"
                         message="Explain what the code does if you want."

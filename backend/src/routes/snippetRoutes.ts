@@ -6,7 +6,7 @@ import { store } from "../controllers/snippetController"
 const router = express.Router()
 
 router.post(
-    "/store",
+    "/",
     [checkJwt],
     [body("title").trim().notEmpty().withMessage("Title field is required.")],
     [
@@ -23,7 +23,7 @@ router.post(
             .withMessage("Language field is required."),
     ],
     [body("code").trim().notEmpty().withMessage("Code is required.")],
-    [body("description").trim().optional({ nullable: true })],
+    [body("code_description").trim().optional({ nullable: true })],
     store
 )
 
