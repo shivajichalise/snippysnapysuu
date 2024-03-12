@@ -109,6 +109,9 @@ const AddSnippet = (props: AddSnippetProps) => {
                 <hr className="bg-200 my-3 h-px w-full rounded-lg border-0" />
 
                 {success && <Alert type="primary" message={successMessage} />}
+                {!success && (
+                    <Alert type="error" message="Error creating snippet." />
+                )}
                 <form onSubmit={submitForm} ref={formRef}>
                     <InputText
                         ref={titleRef}
