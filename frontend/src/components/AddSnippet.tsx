@@ -5,6 +5,7 @@ import InputSelect from "./InputSelect"
 import InputSubmit from "./InputSubmit"
 import InputTextArea from "./InputTextArea"
 import SpanAlert from "./SpanAlert"
+import Alert from "./Alert"
 import programmingLanguages from "../assets/programmingLanguages"
 import { FormEvent, useEffect, useRef, useState } from "react"
 import axiosClient from "../axios-client"
@@ -15,6 +16,7 @@ interface AddSnippetProps {
 }
 ;[]
 const AddSnippet = (props: AddSnippetProps) => {
+    const formRef = useRef<HTMLFormElement>(null)
     const titleRef = useRef<HTMLInputElement>(null)
     const descriptionRef = useRef<HTMLTextAreaElement>(null)
     const tagsRef = useRef<HTMLInputElement>(null)
@@ -23,6 +25,7 @@ const AddSnippet = (props: AddSnippetProps) => {
     const codeDescriptionRef = useRef<HTMLTextAreaElement>(null)
 
     const [successMessage, setSuccessMessage] = useState<string | null>(null)
+    const [success, setSuccess] = useState<boolean>(false)
 
     const [errors, setErrors] = useState<ValidationError[]>([])
 
@@ -38,6 +41,7 @@ const AddSnippet = (props: AddSnippetProps) => {
         e.preventDefault()
 
         if (
+            formRef.current &&
             titleRef.current &&
             descriptionRef.current &&
             tagsRef.current &&
@@ -61,13 +65,16 @@ const AddSnippet = (props: AddSnippetProps) => {
             axiosClient
                 .post("/snippets", payload)
                 .then(({ data }) => {
-                    setSuccessMessage(data.data.message)
+                    setSuccessMessage(data.message)
+                    formRef.current?.reset()
+                    setSuccess(true)
                 })
                 .catch((err) => {
                     const response = err.response
                     if (response && response.status === 403) {
                         setErrors(response.data.data)
                     }
+                    setSuccess(false)
                 })
         } else {
             console.error("")
@@ -100,7 +107,9 @@ const AddSnippet = (props: AddSnippetProps) => {
                     </div>
                 </div>
                 <hr className="bg-200 my-3 h-px w-full rounded-lg border-0" />
-                <form onSubmit={submitForm}>
+
+                {success && <Alert type="primary" message={successMessage} />}
+                <form onSubmit={submitForm} ref={formRef}>
                     <InputText
                         ref={titleRef}
                         name="title"
