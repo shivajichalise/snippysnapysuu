@@ -1,7 +1,7 @@
 import express from "express"
 import { body } from "express-validator"
 import { checkJwt } from "../middlewares/authMiddleware"
-import { store } from "../controllers/snippetController"
+import { getAllSnippets, store } from "../controllers/snippetController"
 
 const router = express.Router()
 
@@ -26,5 +26,7 @@ router.post(
     [body("code_description").trim().optional({ nullable: true })],
     store
 )
+
+router.get("/", [checkJwt], getAllSnippets)
 
 export default router

@@ -3,7 +3,7 @@ interface Code {
     snippet_id: string
     language: string
     description: string[]
-    code: boolean
+    code: string
     createdAt?: Date
     updatedAt?: Date
 }

@@ -6,6 +6,7 @@ import { success, error } from "../utils/httpResponses"
 import Snippet from "../models/Snippet"
 import Code from "../models/Code"
 import { v4 as uuidv4 } from "uuid"
+import jwt from "jsonwebtoken"
 
 // @desc    Find snippet by id
 // @route   Post /api/snippets/:id
@@ -13,6 +14,38 @@ import { v4 as uuidv4 } from "uuid"
 export function find(id: string) {
     const snippet = sql`SELECT * FROM snippets WHERE id = ${id}`
     return snippet
+}
+
+// @desc    Fetch all snippets by current user
+// @route   GET /api/snippets
+// @access  Private
+export async function getAllSnippets(req: Request, res: Response) {
+    const authHeader = req.headers["authorization"]
+    const token = authHeader ? authHeader.split(" ")[1] : ""
+    const decodedToken = jwt.decode(token) as { id?: string } // Type assertion
+    const user_id = decodedToken?.id || null // Optional chaining
+
+    const snippets = await sql<Snippet[]>`SELECT 
+            snippets.*, 
+            JSON_AGG(codes.*) AS codes
+        FROM 
+            snippets
+        LEFT JOIN 
+            codes ON snippets.id = codes.snippet_id
+        WHERE 
+            snippets.user_id = ${user_id}
+        GROUP BY 
+            snippets.id`
+
+    const successParams: HttpResponsesParams<{
+        snippets: Snippet[]
+    }> = {
+        res: res,
+        data: { snippets: snippets },
+        message: "Snippet fetched successfully.",
+        code: 200,
+    }
+    return success(successParams)
 }
 
 // @desc    Store a snippet
