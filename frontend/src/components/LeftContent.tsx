@@ -1,16 +1,17 @@
 import { ChangeEvent, useEffect, useState } from "react"
-import snippets from "../config/snippets"
 import LeftContentProps from "../types/LeftContentProps"
 import Card from "./Card"
 import InputText from "./InputText.tsx"
 import Loader from "./Loader.tsx"
 import IconButton from "./IconButton.tsx"
 import { IconPlus } from "@tabler/icons-react"
+import Snippet from "../types/Snippet.ts"
 
 const LeftContent = (props: LeftContentProps) => {
     const [searchParams] = useState(["title", "tags"])
     const [searchQuery, setSearchQuery] = useState("")
-    const [snippetsList, setSnippetsList] = useState(snippets)
+    const [snippets, setSnippets] = useState<Snippet[]>(props.snippets || [])
+    const [snippetsList, setSnippetsList] = useState<Snippet[]>([])
     const [listFavouriteSnippets, setListFavouriteSnippets] = useState(false)
     const [selectedTypeOfSnippets, setSelectedTypeOfSnippets] =
         useState("snippets")
@@ -19,6 +20,12 @@ const LeftContent = (props: LeftContentProps) => {
     const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(e.target.value)
     }
+
+    useEffect(() => {
+        if (props.snippets) {
+            setSnippets(props.snippets)
+        }
+    }, [props.snippets])
 
     useEffect(() => {
         props.toShow === "favourites"

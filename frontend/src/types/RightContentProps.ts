@@ -1,6 +1,9 @@
+import Snippet from "./Snippet"
+
 interface RightContentProps {
-  id: string
-  clearSelectedSnippet: () => void
+    id: string
+    snippets: Snippet[] | null
+    clearSelectedSnippet: () => void
 }
 
 export default RightContentProps

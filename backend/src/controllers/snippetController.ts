@@ -27,7 +27,7 @@ export async function getAllSnippets(req: Request, res: Response) {
 
     const snippets = await sql<Snippet[]>`SELECT 
             snippets.*, 
-            JSON_AGG(codes.*) AS codes
+            JSON_AGG(codes.*) AS snippets
         FROM 
             snippets
         LEFT JOIN 

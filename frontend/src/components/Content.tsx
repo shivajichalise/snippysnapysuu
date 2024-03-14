@@ -39,17 +39,22 @@ const Content = (props: ContentProps) => {
     return (
         <>
             <div className="bg-300 flex flex-1">
-                <LeftContent
-                    snippets={snippets}
-                    handleClick={handleClick}
-                    toShow={props.show}
-                    type={props.type}
-                    toggleModal={props.toggleModal}
-                />
-                <RightContent
-                    id={snippetId}
-                    clearSelectedSnippet={clearSelectedSnippet}
-                />
+                {snippets !== null && (
+                    <>
+                        <LeftContent
+                            snippets={snippets}
+                            handleClick={handleClick}
+                            toShow={props.show}
+                            type={props.type}
+                            toggleModal={props.toggleModal}
+                        />
+                        <RightContent
+                            id={snippetId}
+                            snippets={snippets}
+                            clearSelectedSnippet={clearSelectedSnippet}
+                        />
+                    </>
+                )}
             </div>
         </>
     )
