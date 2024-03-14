@@ -4,8 +4,8 @@ import Snippet from "../types/Snippet"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { tomorrow } from "react-syntax-highlighter/dist/esm/styles/prism"
 import { CopyToClipboard } from "react-copy-to-clipboard"
-import Button from "./Button"
 import { IconX } from "@tabler/icons-react"
+import IconButton from "./IconButton"
 
 const RightContent = (props: RightContentProps) => {
     const [snippets, setSnippets] = useState<Snippet[]>(props.snippets || [])
@@ -55,12 +55,12 @@ const RightContent = (props: RightContentProps) => {
                     <div>
                         <div className="flex justify-between">
                             <h1 className="text-2xl">{snippet?.title}</h1>
-                            <Button
+                            <IconButton
                                 type="primary"
                                 onClick={props.clearSelectedSnippet}
                             >
                                 <IconX size={15} className="m-1" />
-                            </Button>
+                            </IconButton>
                         </div>
                         <p className="text-primary-200">
                             {snippet?.description}
