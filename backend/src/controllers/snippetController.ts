@@ -27,11 +27,14 @@ export async function getAllSnippets(req: Request, res: Response) {
 
     const snippets = await sql<Snippet[]>`SELECT 
             snippets.*, 
-            JSON_AGG(codes.*) AS snippets
+            JSON_AGG(codes.*) AS snippets,
+            JSON_AGG(collections.name) AS collections
         FROM 
             snippets
         LEFT JOIN 
             codes ON snippets.id = codes.snippet_id
+        LEFT JOIN 
+            collections ON snippets.collection_id = collections.id
         WHERE 
             snippets.user_id = ${user_id}
         GROUP BY 
