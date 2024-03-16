@@ -12,9 +12,9 @@ import axiosClient from "../axios-client"
 import ValidationError from "../types/ValidationError"
 
 interface AddSnippetProps {
-    toggleModal: () => void
+    toggleModal: (add: string) => void
 }
-;[]
+
 const AddSnippet = (props: AddSnippetProps) => {
     const formRef = useRef<HTMLFormElement>(null)
     const titleRef = useRef<HTMLInputElement>(null)

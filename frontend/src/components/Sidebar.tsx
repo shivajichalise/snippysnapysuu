@@ -6,7 +6,6 @@ import {
     IconTag,
 } from "@tabler/icons-react"
 import Anchor from "./Anchor"
-import Button from "./Button"
 import collections from "../config/collections"
 import tags from "../config/tags"
 import SidebarProps from "../types/SidebarProps"
@@ -38,7 +37,7 @@ const Sidebar = (props: SidebarProps) => {
                     </label>
                     <IconButton
                         type="primary"
-                        onClick={() => console.log("new collectin")}
+                        onClick={() => props.toggleModal("add_collection")}
                     >
                         <IconPlus size={13} />
                     </IconButton>

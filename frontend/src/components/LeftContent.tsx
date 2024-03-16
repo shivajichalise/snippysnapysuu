@@ -101,7 +101,7 @@ const LeftContent = (props: LeftContentProps) => {
                         <div className="ml-1">
                             <IconButton
                                 type="primary"
-                                onClick={props.toggleModal}
+                                onClick={() => props.toggleModal("add_snippet")}
                             >
                                 <IconPlus size={15} className="m-2" />
                             </IconButton>

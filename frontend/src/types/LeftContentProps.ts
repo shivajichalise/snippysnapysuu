@@ -5,7 +5,7 @@ interface LeftContentProps {
     handleClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
     toShow: string
     type: string
-    toggleModal: () => void
+    toggleModal: (add: string) => void
 }
 
 export default LeftContentProps
