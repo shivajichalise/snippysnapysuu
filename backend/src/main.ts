@@ -2,6 +2,7 @@ import "dotenv/config"
 import express from "express"
 import authRoutes from "./routes/authRoutes"
 import snippetRoutes from "./routes/snippetRoutes"
+import collectionRoutes from "./routes/collectionRoutes"
 import { success } from "./utils/httpResponses"
 import HttpResponsesParams from "./types/HttpResponsesParams"
 import bodyParser from "body-parser"
@@ -36,5 +37,6 @@ app.get("/api", (_, res) => {
 
 app.use("/api/auth", authRoutes)
 app.use("/api/snippets", snippetRoutes)
+app.use("/api/collections", collectionRoutes)
 
 export default app
