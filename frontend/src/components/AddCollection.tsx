@@ -32,7 +32,7 @@ const AddCollection = (props: AddCollectionProps) => {
             }
 
             axiosClient
-                .post("/snippets", payload)
+                .post("/collections", payload)
                 .then(({ data }) => {
                     setSuccessMessage(data.message)
                     formRef.current?.reset()
@@ -51,7 +51,7 @@ const AddCollection = (props: AddCollectionProps) => {
     }
 
     useEffect(() => {
-        setNameError(errors.find((e) => e.path === "title"))
+        setNameError(errors.find((e) => e.path === "name"))
     }, [errors])
 
     return (
