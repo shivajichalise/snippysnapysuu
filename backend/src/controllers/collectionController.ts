@@ -21,14 +21,11 @@ export function find(id: string) {
 export async function getAllCollections(req: Request, res: Response) {
     const user_id = getCurrentUserId(req)
 
-    const collections = await sql<Collection[]>`SELECT 
-            collections.*, 
-        FROM 
-            snippets
+    const collections = await sql<Collection[]>`
+        SELECT * FROM 
+            collections
         WHERE 
-            snippets.user_id = ${user_id}
-        GROUP BY 
-            snippets.id`
+            collections.user_id = ${user_id}`
 
     const successParams: HttpResponsesParams<{
         collections: Collection[]
@@ -58,6 +55,8 @@ export async function store(req: Request, res: Response) {
 
     const { name } = req.body
     const user_id = getCurrentUserId(req)
+
+    console.log(name)
 
     const collection = await sql<Collection[]>`
         INSERT INTO collections (id, user_id, name)
