@@ -84,7 +84,7 @@ const Sidebar = (props: SidebarProps) => {
                     <label className="text-accent-200 text-sm">Tags</label>
                     <IconButton
                         type="primary"
-                        onClick={() => console.log("new tag")}
+                        onClick={() => props.toggleModal("add_tag")}
                     >
                         <IconPlus size={13} />
                     </IconButton>
@@ -96,7 +96,7 @@ const Sidebar = (props: SidebarProps) => {
                         icon={<IconTag size={16} />}
                         text={tag.name}
                         isActive={props.tab === tag.slug ? true : false}
-                        select={() => props.selectTab(tag.slug, "tag")}
+                        select={() => props.selectTab(tag.name, "tag")}
                     />
                 ))}
             </div>

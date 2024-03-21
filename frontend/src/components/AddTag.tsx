@@ -8,11 +8,11 @@ import { FormEvent, useEffect, useRef, useState } from "react"
 import axiosClient from "../axios-client"
 import ValidationError from "../types/ValidationError"
 
-interface AddCollectionProps {
+interface AddTagProps {
     toggleModal: (add: string) => void
 }
 
-const AddCollection = (props: AddCollectionProps) => {
+const AddTag = (props: AddTagProps) => {
     const formRef = useRef<HTMLFormElement>(null)
     const nameRef = useRef<HTMLInputElement>(null)
 
@@ -59,7 +59,7 @@ const AddCollection = (props: AddCollectionProps) => {
             <div className="flex flex-col">
                 <div className="flex w-full items-center justify-center">
                     <div className="flex w-full items-center justify-between">
-                        <h1 className="text-lg">Add Collection</h1>
+                        <h1 className="text-lg">Add Tag</h1>
                         <IconButton
                             type="primary"
                             onClick={() => props.toggleModal("add_collection")}
@@ -72,7 +72,7 @@ const AddCollection = (props: AddCollectionProps) => {
 
                 {success && <Alert type="primary" message={successMessage} />}
                 {!success && (
-                    <Alert type="error" message="Error creating collection." />
+                    <Alert type="error" message="Error creating tag." />
                 )}
                 <form onSubmit={submitForm} ref={formRef}>
                     <InputText
@@ -81,7 +81,7 @@ const AddCollection = (props: AddCollectionProps) => {
                         id="name"
                         placeholder="Name"
                         hasLabel={true}
-                        inputLabel="Collection name"
+                        inputLabel="Tag name"
                         required={true}
                     />
                     {nameError && (
@@ -95,4 +95,4 @@ const AddCollection = (props: AddCollectionProps) => {
     )
 }
 
-export default AddCollection
+export default AddTag

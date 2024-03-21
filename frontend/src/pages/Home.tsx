@@ -5,6 +5,7 @@ import Sidebar from "../components/Sidebar"
 import Modal from "../components/Modal"
 import AddSnippet from "../components/AddSnippet"
 import AddCollection from "../components/AddCollection"
+import AddTag from "../components/AddTag"
 
 const Home = () => {
     const [selectedTab, setSelectedTab] = useState("snippets")
@@ -26,6 +27,16 @@ const Home = () => {
         setOpenModal(!openModal)
     }
 
+    interface ModalComponents {
+        [key: string]: JSX.Element // Allow any string key with JSX.Element value
+    }
+
+    const modalComponents: ModalComponents = {
+        add_snippet: <AddSnippet toggleModal={toggleModal} />,
+        add_collection: <AddCollection toggleModal={toggleModal} />,
+        add_tag: <AddTag toggleModal={toggleModal} />,
+    }
+
     return (
         <>
             <Modal
@@ -34,11 +45,7 @@ const Home = () => {
                 onClose={() => toggleModal("add_snippet")}
                 size="large"
             >
-                {openModalFor === "add_snippet" ? (
-                    <AddSnippet toggleModal={toggleModal} />
-                ) : (
-                    <AddCollection toggleModal={toggleModal} />
-                )}
+                {modalComponents[openModalFor]}
             </Modal>
 
             <Navbar />
