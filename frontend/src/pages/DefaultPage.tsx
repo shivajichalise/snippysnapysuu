@@ -1,16 +1,23 @@
 import { Navigate, Outlet } from "react-router-dom"
 import { useStateContext } from "../contexts/ContextProvider"
+import { ReactNode } from "react"
 
-const DefaultPage = () => {
+interface AuthenticatedRouteProps {
+    children: ReactNode
+}
+
+const AuthenticatedRoute = (props: AuthenticatedRouteProps) => {
     const { token } = useStateContext()
 
-    if (!token) {
-        return <Navigate to="/login" />
-    }
+    return token ? props.children : <Navigate to="/login" />
+}
 
+const DefaultPage = () => {
     return (
         <div>
-            <Outlet />
+            <AuthenticatedRoute>
+                <Outlet />
+            </AuthenticatedRoute>
         </div>
     )
 }
