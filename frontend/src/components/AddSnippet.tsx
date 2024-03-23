@@ -10,6 +10,7 @@ import programmingLanguages from "../assets/programmingLanguages"
 import { FormEvent, useEffect, useRef, useState } from "react"
 import axiosClient from "../axios-client"
 import ValidationError from "../types/ValidationError"
+import DroppableContainer from "./DroppableContainer"
 
 interface AddSnippetProps {
     toggleModal: (add: string) => void
@@ -208,6 +209,10 @@ const AddSnippet = (props: AddSnippetProps) => {
                         type="warning"
                         message="Explain what the code does if you want."
                     />
+
+                    <DroppableContainer label="Tags">
+                        <h1>Dropppable</h1>
+                    </DroppableContainer>
 
                     <InputSubmit value="Save" />
                 </form>
