@@ -32,7 +32,7 @@ const AddTag = (props: AddTagProps) => {
             }
 
             axiosClient
-                .post("/collections", payload)
+                .post("/tags", payload)
                 .then(({ data }) => {
                     setSuccessMessage(data.message)
                     formRef.current?.reset()

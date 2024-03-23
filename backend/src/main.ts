@@ -3,6 +3,7 @@ import express from "express"
 import authRoutes from "./routes/authRoutes"
 import snippetRoutes from "./routes/snippetRoutes"
 import collectionRoutes from "./routes/collectionRoutes"
+import tagRoutes from "./routes/tagRoutes"
 import { success } from "./utils/httpResponses"
 import HttpResponsesParams from "./types/HttpResponsesParams"
 import bodyParser from "body-parser"
@@ -38,5 +39,6 @@ app.get("/api", (_, res) => {
 app.use("/api/auth", authRoutes)
 app.use("/api/snippets", snippetRoutes)
 app.use("/api/collections", collectionRoutes)
+app.use("/api/tags", tagRoutes)
 
 export default app

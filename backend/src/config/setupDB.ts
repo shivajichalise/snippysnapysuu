@@ -1,16 +1,16 @@
-import sql from "./db";
-import chalk from 'chalk'
+import sql from "./db"
+import chalk from "chalk"
 
 const error = chalk.underline.red
 const success = chalk.green
-const warning = chalk.hex('#FFA500')
+const warning = chalk.hex("#FFA500")
 
 const DATABASE: string = process.env.DB_DATABASE!
 
-async function createUsersTable(){
+async function createUsersTable() {
     try {
-        await sql`SELECT * FROM users`;
-    } catch(error){
+        await sql`SELECT * FROM users`
+    } catch (error) {
         console.log(warning("Users table doesn't exist. Creating one."))
         await sql`CREATE TABLE users (
             id UUID PRIMARY KEY NOT NULL,
@@ -23,10 +23,10 @@ async function createUsersTable(){
     }
 }
 
-async function createCollectionsTable(){
+async function createCollectionsTable() {
     try {
-        await sql`SELECT * FROM collections`;
-    } catch(error){
+        await sql`SELECT * FROM collections`
+    } catch (error) {
         console.log(warning("Collections table doesn't exist. Creating one."))
         await sql`CREATE TABLE collections (
             id UUID PRIMARY KEY NOT NULL,
@@ -38,10 +38,10 @@ async function createCollectionsTable(){
     }
 }
 
-async function createSnippetsTable(){
+async function createSnippetsTable() {
     try {
-        await sql`SELECT * FROM snippets`;
-    } catch(error){
+        await sql`SELECT * FROM snippets`
+    } catch (error) {
         console.log(warning("Snippets table doesn't exist. Creating one."))
         await sql`CREATE TABLE snippets (
             id UUID PRIMARY KEY NOT NULL,
@@ -57,10 +57,10 @@ async function createSnippetsTable(){
     }
 }
 
-async function createCodesTable(){
+async function createCodesTable() {
     try {
-        await sql`SELECT * FROM codes`;
-    } catch(error){
+        await sql`SELECT * FROM codes`
+    } catch (error) {
         console.log(warning("Codes table doesn't exist. Creating one."))
         await sql`CREATE TABLE codes (
             id UUID PRIMARY KEY NOT NULL,
@@ -74,21 +74,58 @@ async function createCodesTable(){
     }
 }
 
-async function setupDB(){
+async function createTagsTable() {
+    try {
+        await sql`SELECT * FROM tags`
+    } catch (error) {
+        console.log(warning("Tags table doesn't exist. Creating one."))
+        await sql`CREATE TABLE tags (
+            id UUID PRIMARY KEY NOT NULL,
+            user_id UUID REFERENCES users,
+            name VARCHAR(255),
+            created_at TIMESTAMP WITH TIME ZONE,
+            updated_at TIMESTAMP WITH TIME ZONE
+        )`
+    }
+}
+
+async function createSnippetTagsTable() {
+    try {
+        await sql`SELECT * FROM snippet_tags`
+    } catch (error) {
+        console.log(
+            warning("Some dependency table doesn't exist. Creating one.")
+        )
+        await sql`CREATE TABLE snippet_tags (
+            snippet_id UUID REFERENCES snippets,
+            tag_id UUID REFERENCES tags,
+            created_at TIMESTAMP WITH TIME ZONE,
+            updated_at TIMESTAMP WITH TIME ZONE
+        )`
+    }
+}
+
+async function setupDB() {
     try {
         await sql`SELECT datname FROM pg_catalog.pg_database WHERE datname=${DATABASE}`
         try {
-            await createUsersTable();
-            await createCollectionsTable();
-            await createSnippetsTable();
-            await createCodesTable();
+            await createUsersTable()
+            await createCollectionsTable()
+            await createSnippetsTable()
+            await createCodesTable()
+            await createTagsTable()
+            await createSnippetTagsTable()
         } catch (err) {
-            console.error(error("Error creating tables:", err));
-            process.exit(1);
+            console.error(error("Error creating tables:", err))
+            process.exit(1)
         }
-    } catch(err){
-        console.log(error(`Please create your database before proceeding. Create database with exact name that you've provided in the .env.`));
-        process.exit(1);
+    } catch (err) {
+        console.log(
+            error(
+                `Please create your database before proceeding. Create database with exact name that you've provided in the .env.`
+            )
+        )
+        process.exit(1)
     }
 }
 

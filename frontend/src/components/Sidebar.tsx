@@ -6,16 +6,18 @@ import {
     IconTag,
 } from "@tabler/icons-react"
 import Anchor from "./Anchor"
-import tags from "../config/tags"
 import SidebarProps from "../types/SidebarProps"
 import IconButton from "./IconButton"
 import { useEffect, useState } from "react"
 import Collection from "../types/Collection"
+import Tag from "../types/Tag"
 import axiosClient from "../axios-client"
 
 const Sidebar = (props: SidebarProps) => {
     const [collections, setCollections] = useState<Collection[]>([])
-    const [errors, setErrors] = useState("")
+    const [tags, setTags] = useState<Tag[]>([])
+    const [collectionErrors, setCollectionsErrors] = useState("")
+    const [tagErrors, setTagsErrors] = useState("")
 
     const fetchCollections = () => {
         axiosClient
@@ -25,12 +27,25 @@ const Sidebar = (props: SidebarProps) => {
             })
             .catch((err) => {
                 const response = err.response
-                setErrors(response.data.message)
+                setCollectionsErrors(response.data.message)
+            })
+    }
+
+    const fetchTags = () => {
+        axiosClient
+            .get("/tags")
+            .then(({ data }) => {
+                setTags(data.data.tags)
+            })
+            .catch((err) => {
+                const response = err.response
+                setTagsErrors(response.data.message)
             })
     }
 
     useEffect(() => {
         fetchCollections()
+        fetchTags()
     }, [])
 
     return (
@@ -89,16 +104,17 @@ const Sidebar = (props: SidebarProps) => {
                         <IconPlus size={13} />
                     </IconButton>
                 </div>
-                {tags.map((tag) => (
-                    <Anchor
-                        key={tag.id}
-                        to="#"
-                        icon={<IconTag size={16} />}
-                        text={tag.name}
-                        isActive={props.tab === tag.slug ? true : false}
-                        select={() => props.selectTab(tag.name, "tag")}
-                    />
-                ))}
+                {tags &&
+                    tags.map((tag) => (
+                        <Anchor
+                            key={tag.id}
+                            to="#"
+                            icon={<IconTag size={16} />}
+                            text={tag.name}
+                            isActive={props.tab === tag.name ? true : false}
+                            select={() => props.selectTab(tag.name, "tag")}
+                        />
+                    ))}
             </div>
         </div>
     )
