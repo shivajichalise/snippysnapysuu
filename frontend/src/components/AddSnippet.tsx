@@ -10,7 +10,7 @@ import programmingLanguages from "../assets/programmingLanguages"
 import { FormEvent, useEffect, useRef, useState } from "react"
 import axiosClient from "../axios-client"
 import ValidationError from "../types/ValidationError"
-import DroppableContainer from "./DroppableContainer"
+import InputTag from "./InputTag"
 
 interface AddSnippetProps {
     toggleModal: (add: string) => void
@@ -210,9 +210,15 @@ const AddSnippet = (props: AddSnippetProps) => {
                         message="Explain what the code does if you want."
                     />
 
-                    <DroppableContainer label="Tags">
-                        <h1>Dropppable</h1>
-                    </DroppableContainer>
+                    <InputTag
+                        ref={tagsRef}
+                        name="tags"
+                        id="tags"
+                        placeholder="tag1,tag2,tag3"
+                        hasLabel={true}
+                        inputLabel="Tags"
+                        required={true}
+                    />
 
                     <InputSubmit value="Save" />
                 </form>
