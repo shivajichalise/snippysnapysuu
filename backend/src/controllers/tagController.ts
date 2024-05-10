@@ -8,6 +8,7 @@ import Code from "../models/Code"
 import { v4 as uuidv4 } from "uuid"
 import jwt from "jsonwebtoken"
 import getCurrentUserId from "../utils/getCurrentUserId"
+import TagForOption from "../models/TagForOption"
 
 // @desc    Find tag by id
 // @route   Post /api/tags/:id
@@ -22,6 +23,7 @@ export function find(id: string) {
 // @access  Private
 export async function getAllTags(req: Request, res: Response) {
     const user_id = getCurrentUserId(req)
+    const optionParam = req.query.option
 
     const tags = await sql<Tag[]>`SELECT 
             * 
@@ -29,6 +31,23 @@ export async function getAllTags(req: Request, res: Response) {
             tags
         WHERE 
             tags.user_id = ${user_id}`
+
+    if (optionParam && optionParam.toString().toLowerCase() === "true") {
+        const tagOptions = tags.map((tag) => ({
+            value: tag.id,
+            label: tag.name,
+        }))
+
+        const successParams: HttpResponsesParams<{
+            tags: TagForOption[]
+        }> = {
+            res: res,
+            data: { tags: tagOptions },
+            message: "Tags fetched successfully.",
+            code: 200,
+        }
+        return success(successParams)
+    }
 
     const successParams: HttpResponsesParams<{
         tags: Tag[]

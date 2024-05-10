@@ -1,5 +1,3 @@
-import { ChangeEvent, RefObject } from "react"
-
 interface InputTagProps {
     inputLabel?: string
     hasLabel?: boolean
@@ -7,6 +5,7 @@ interface InputTagProps {
     placeholder?: string
     id: string
     required?: false | boolean
+    options: { value: string; label: string }[]
 }
 
 export default InputTagProps

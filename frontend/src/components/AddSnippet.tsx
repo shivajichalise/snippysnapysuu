@@ -11,6 +11,7 @@ import { FormEvent, useEffect, useRef, useState } from "react"
 import axiosClient from "../axios-client"
 import ValidationError from "../types/ValidationError"
 import InputTag from "./InputTag"
+import TagForOption from "../types/TagForOption"
 
 interface AddSnippetProps {
     toggleModal: (add: string) => void
@@ -37,6 +38,9 @@ const AddSnippet = (props: AddSnippetProps) => {
     const [codeError, setCodeError] = useState<ValidationError>()
     const [codeDescriptionError, setCodeDescriptionError] =
         useState<ValidationError>()
+
+    const [tags, setTags] = useState<TagForOption[]>([])
+    const [tagErrors, setTagsErrors] = useState("")
 
     const submitForm = (e: FormEvent) => {
         e.preventDefault()
@@ -81,6 +85,22 @@ const AddSnippet = (props: AddSnippetProps) => {
             console.error("")
         }
     }
+
+    const fetchTags = () => {
+        axiosClient
+            .get("/tags?option=true")
+            .then(({ data }) => {
+                setTags(data.data.tags)
+            })
+            .catch((err) => {
+                const response = err.response
+                setTagsErrors(response.data.message)
+            })
+    }
+
+    useEffect(() => {
+        fetchTags()
+    }, [])
 
     useEffect(() => {
         setTitleError(errors.find((e) => e.path === "title"))
@@ -145,22 +165,20 @@ const AddSnippet = (props: AddSnippetProps) => {
                         />
                     )}
 
-                    <InputText
+                    <InputTag
                         ref={tagsRef}
                         name="tags"
                         id="tags"
-                        placeholder="tag1,tag2,tag3"
+                        placeholder="Select tags"
                         hasLabel={true}
                         inputLabel="Tags"
-                        required={true}
+                        required={false}
+                        options={tags}
                     />
+
                     {tagsError && (
                         <SpanAlert type="error" message={tagsError.msg} />
                     )}
-                    <SpanAlert
-                        type="warning"
-                        message="Provide tags in comma-separated format"
-                    />
 
                     <InputSelect
                         ref={languageRef}
@@ -208,16 +226,6 @@ const AddSnippet = (props: AddSnippetProps) => {
                     <SpanAlert
                         type="warning"
                         message="Explain what the code does if you want."
-                    />
-
-                    <InputTag
-                        ref={tagsRef}
-                        name="tags"
-                        id="tags"
-                        placeholder="tag1,tag2,tag3"
-                        hasLabel={true}
-                        inputLabel="Tags"
-                        required={true}
                     />
 
                     <InputSubmit value="Save" />

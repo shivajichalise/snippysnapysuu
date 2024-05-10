@@ -2,14 +2,9 @@ import { forwardRef } from "react"
 import InputTagProps from "../types/InputTagProps"
 import Select from "react-select"
 
-const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-]
-
 const InputTag = forwardRef<HTMLInputElement, InputTagProps>((props) => {
-    const { id, name, placeholder, hasLabel, inputLabel, required } = props
+    const { id, name, placeholder, hasLabel, inputLabel, required, options } =
+        props
 
     return (
         <div className="w-full">
