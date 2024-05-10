@@ -8,12 +8,6 @@ const options = [
     { value: "vanilla", label: "Vanilla" },
 ]
 
-const onHover = () => ({
-    ":hover": {
-        borderColor: "red !important",
-    },
-})
-
 const InputTag = forwardRef<HTMLInputElement, InputTagProps>((props) => {
     const { id, name, placeholder, hasLabel, inputLabel, required } = props
 
@@ -41,13 +35,13 @@ const InputTag = forwardRef<HTMLInputElement, InputTagProps>((props) => {
                     indicatorsContainer: () => "bg-300",
                 }}
                 styles={{
+                    input: (baseStyles) => ({
+                        ...baseStyles,
+                        color: "white",
+                    }),
                     menu: (baseStyles) => ({
                         ...baseStyles,
-                        backgroundColor: "#1D1F21 !important",
-                        marginBottom: "5rem",
-                    }),
-                    menuList: (baseStyles) => ({
-                        ...baseStyles,
+                        backgroundColor: "#1D1F21",
                     }),
                     option: (baseStyles, state) => ({
                         ...baseStyles,
@@ -59,6 +53,18 @@ const InputTag = forwardRef<HTMLInputElement, InputTagProps>((props) => {
                         ...baseStyles,
                         color: "#E0E0E0",
                         width: "1.8rem",
+                        cursor: "pointer",
+                        ":hover": {
+                            color: "#E0E0E0",
+                        },
+                    }),
+                    clearIndicator: (baseStyles) => ({
+                        ...baseStyles,
+                        color: "#E0E0E0",
+                        width: "2rem",
+                        ":hover": {
+                            color: "#e74c3c",
+                        },
                     }),
                     control: (baseStyles, state) => ({
                         ...baseStyles,
@@ -68,7 +74,6 @@ const InputTag = forwardRef<HTMLInputElement, InputTagProps>((props) => {
                         borderColor: state.isFocused
                             ? "#FF983F !important"
                             : "green",
-                        ...onHover,
                     }),
                     indicatorSeparator: (baseStyles) => ({
                         ...baseStyles,
@@ -78,7 +83,6 @@ const InputTag = forwardRef<HTMLInputElement, InputTagProps>((props) => {
                         ...baseStyles,
                         border: "1px solid #444648",
                         borderRadius: "0 0.3rem 0.3rem 0",
-                        ...onHover,
                     }),
                     valueContainer: (baseStyles) => ({
                         ...baseStyles,
@@ -86,6 +90,22 @@ const InputTag = forwardRef<HTMLInputElement, InputTagProps>((props) => {
                         borderRadius: "0.3rem 0 0 0.3rem",
                         ":hover": {
                             cursor: "pointer",
+                        },
+                    }),
+                    multiValueLabel: (baseStyles) => ({
+                        ...baseStyles,
+                        backgroundColor: "#FF6600",
+                        borderTopRightRadius: "0",
+                        borderBottomRightRadius: "0",
+                        color: "white",
+                    }),
+                    multiValueRemove: (baseStyles) => ({
+                        ...baseStyles,
+                        backgroundColor: "#FF6600",
+                        borderTopLeftRadius: "0",
+                        borderBottomLeftRadius: "0",
+                        ":hover": {
+                            backgroundColor: "#FF7F50",
                         },
                     }),
                 }}
