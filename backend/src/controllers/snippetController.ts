@@ -8,6 +8,7 @@ import Code from "../models/Code"
 import { v4 as uuidv4 } from "uuid"
 import jwt from "jsonwebtoken"
 import SnippetTag from "../models/SnippetTag"
+import getCurrentUserId from "../utils/getCurrentUserId"
 
 // @desc    Find snippet by id
 // @route   Post /api/snippets/:id
@@ -29,13 +30,18 @@ export async function getAllSnippets(req: Request, res: Response) {
     const snippets = await sql<Snippet[]>`SELECT 
             snippets.*, 
             JSON_AGG(codes.*) AS snippets,
-            JSON_AGG(collections.name) AS collections
+            JSON_AGG(collections.name) AS collections,
+            JSON_AGG(tags.name) AS tags
         FROM 
             snippets
         LEFT JOIN 
             codes ON snippets.id = codes.snippet_id
         LEFT JOIN 
             collections ON snippets.collection_id = collections.id
+        LEFT JOIN 
+            snippet_tags ON snippets.id = snippet_tags.snippet_id
+        LEFT JOIN 
+            tags ON snippet_tags.tag_id = tags.id
         WHERE 
             snippets.user_id = ${user_id}
         GROUP BY 
@@ -57,6 +63,7 @@ export async function getAllSnippets(req: Request, res: Response) {
 // @access  Private
 export async function store(req: Request, res: Response) {
     const result = validationResult(req)
+    const user_id = getCurrentUserId(req)
     if (!result.isEmpty()) {
         const validationErrorParams: HttpResponsesParams<ValidationError[]> = {
             res: res,
@@ -71,8 +78,8 @@ export async function store(req: Request, res: Response) {
         req.body
 
     const snippet = await sql<Snippet[]>`
-        INSERT INTO snippets (id, title, description, tags, favourite)
-        VALUES (${uuidv4()}, ${title}, ${description}, ${tags}, ${false})
+        INSERT INTO snippets (id, user_id, title, description, favourite)
+        VALUES (${uuidv4()}, ${user_id}, ${title}, ${description}, ${false})
         RETURNING *
         `
     if (snippet.length > 0) {
@@ -83,10 +90,10 @@ export async function store(req: Request, res: Response) {
         `
 
         if (insertedCode.length > 0) {
-            for (let i = 0; i < tags.length(); i++) {
+            for (let i = 0; i < tags.length; i++) {
                 await sql<SnippetTag[]>`
                     INSERT INTO snippet_tags (snippet_id, tag_id)
-                    VALUES (${uuidv4()}, ${snippet[0].id}, ${language}, ${code_description}, ${code})
+                    VALUES (${snippet[0].id}, ${tags[i]})
                     RETURNING *
                     `
             }

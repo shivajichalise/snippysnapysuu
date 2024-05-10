@@ -87,26 +87,26 @@ const LeftContent = (props: LeftContentProps) => {
 
     return (
         <div className="border-200 flex h-[calc(100vh-3.5rem)] flex-col overflow-y-scroll border-r p-4">
+            <div className="mb-4 flex items-center justify-between">
+                <InputText
+                    name="search"
+                    id="search-snippet"
+                    placeholder="Search snippet..."
+                    onChange={handleOnChange}
+                />
+                <div className="ml-1">
+                    <IconButton
+                        type="primary"
+                        onClick={() => props.toggleModal("add_snippet")}
+                    >
+                        <IconPlus size={15} className="m-2" />
+                    </IconButton>
+                </div>
+            </div>
             {showLoader ? (
                 <Loader />
             ) : snippetsList.length > 0 ? (
                 <>
-                    <div className="mb-4 flex items-center justify-between">
-                        <InputText
-                            name="search"
-                            id="search-snippet"
-                            placeholder="Search snippet..."
-                            onChange={handleOnChange}
-                        />
-                        <div className="ml-1">
-                            <IconButton
-                                type="primary"
-                                onClick={() => props.toggleModal("add_snippet")}
-                            >
-                                <IconPlus size={15} className="m-2" />
-                            </IconButton>
-                        </div>
-                    </div>
                     <div className="flex w-96 flex-col gap-4">
                         {snippetsList.map((snippet) => (
                             <Card
