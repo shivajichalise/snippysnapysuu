@@ -7,6 +7,7 @@ import Snippet from "../models/Snippet"
 import Code from "../models/Code"
 import { v4 as uuidv4 } from "uuid"
 import jwt from "jsonwebtoken"
+import SnippetTag from "../models/SnippetTag"
 
 // @desc    Find snippet by id
 // @route   Post /api/snippets/:id
@@ -82,6 +83,14 @@ export async function store(req: Request, res: Response) {
         `
 
         if (insertedCode.length > 0) {
+            for (let i = 0; i < tags.length(); i++) {
+                await sql<SnippetTag[]>`
+                    INSERT INTO snippet_tags (snippet_id, tag_id)
+                    VALUES (${uuidv4()}, ${snippet[0].id}, ${language}, ${code_description}, ${code})
+                    RETURNING *
+                    `
+            }
+
             const successParams: HttpResponsesParams<{
                 snippet: Snippet
                 code: Code

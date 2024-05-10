@@ -3,8 +3,16 @@ import InputTagProps from "../types/InputTagProps"
 import Select from "react-select"
 
 const InputTag = forwardRef<HTMLInputElement, InputTagProps>((props) => {
-    const { id, name, placeholder, hasLabel, inputLabel, required, options } =
-        props
+    const {
+        id,
+        name,
+        placeholder,
+        hasLabel,
+        inputLabel,
+        required,
+        options,
+        handleChange,
+    } = props
 
     return (
         <div className="w-full">
@@ -24,6 +32,7 @@ const InputTag = forwardRef<HTMLInputElement, InputTagProps>((props) => {
                 name={name}
                 placeholder={placeholder}
                 isMulti
+                onChange={handleChange}
                 classNames={{
                     placeholder: () => "placeholder-gray-400 text-sm",
                     valueContainer: () => "bg-300",

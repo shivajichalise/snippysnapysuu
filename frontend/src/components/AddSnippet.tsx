@@ -12,6 +12,7 @@ import axiosClient from "../axios-client"
 import ValidationError from "../types/ValidationError"
 import InputTag from "./InputTag"
 import TagForOption from "../types/TagForOption"
+import { ActionMeta } from "react-select"
 
 interface AddSnippetProps {
     toggleModal: (add: string) => void
@@ -21,7 +22,6 @@ const AddSnippet = (props: AddSnippetProps) => {
     const formRef = useRef<HTMLFormElement>(null)
     const titleRef = useRef<HTMLInputElement>(null)
     const descriptionRef = useRef<HTMLTextAreaElement>(null)
-    const tagsRef = useRef<HTMLInputElement>(null)
     const languageRef = useRef<HTMLSelectElement>(null)
     const codeRef = useRef<HTMLTextAreaElement>(null)
     const codeDescriptionRef = useRef<HTMLTextAreaElement>(null)
@@ -42,6 +42,19 @@ const AddSnippet = (props: AddSnippetProps) => {
     const [tags, setTags] = useState<TagForOption[]>([])
     const [tagErrors, setTagsErrors] = useState("")
 
+    const [selectedTags, setSelectedTags] = useState<string[]>([])
+
+    const handleTagChange = (
+        option: readonly TagForOption[],
+        actionMeta: ActionMeta<TagForOption>
+    ) => {
+        const selectedOptions = option.map((o) => {
+            return o.value
+        })
+
+        setSelectedTags(selectedOptions)
+    }
+
     const submitForm = (e: FormEvent) => {
         e.preventDefault()
 
@@ -49,19 +62,14 @@ const AddSnippet = (props: AddSnippetProps) => {
             formRef.current &&
             titleRef.current &&
             descriptionRef.current &&
-            tagsRef.current &&
             languageRef.current &&
             codeRef.current &&
             codeDescriptionRef.current
         ) {
-            const tags = tagsRef.current.value
-                .split(",")
-                .map((tag) => tag.trim())
-
             const payload = {
                 title: titleRef.current.value,
                 description: descriptionRef.current.value,
-                tags: tags,
+                tags: selectedTags,
                 language: languageRef.current.value,
                 code: codeRef.current.value,
                 code_description: codeDescriptionRef.current.value,
@@ -82,7 +90,7 @@ const AddSnippet = (props: AddSnippetProps) => {
                     setSuccess(false)
                 })
         } else {
-            console.error("")
+            console.error("error")
         }
     }
 
@@ -166,7 +174,6 @@ const AddSnippet = (props: AddSnippetProps) => {
                     )}
 
                     <InputTag
-                        ref={tagsRef}
                         name="tags"
                         id="tags"
                         placeholder="Select tags"
@@ -174,6 +181,7 @@ const AddSnippet = (props: AddSnippetProps) => {
                         inputLabel="Tags"
                         required={false}
                         options={tags}
+                        handleChange={handleTagChange}
                     />
 
                     {tagsError && (
