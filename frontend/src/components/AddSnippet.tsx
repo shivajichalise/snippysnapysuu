@@ -12,11 +12,8 @@ import axiosClient from "../axios-client"
 import ValidationError from "../types/ValidationError"
 import InputTag from "./InputTag"
 import TagForOption from "../types/TagForOption"
+import AddSnippetProps from "../types/AddSnippetProps"
 import { ActionMeta } from "react-select"
-
-interface AddSnippetProps {
-    toggleModal: (add: string) => void
-}
 
 const AddSnippet = (props: AddSnippetProps) => {
     const formRef = useRef<HTMLFormElement>(null)
@@ -55,6 +52,8 @@ const AddSnippet = (props: AddSnippetProps) => {
         setSelectedTags(selectedOptions)
     }
 
+    const setSnippets = props.setSnippets
+
     const submitForm = (e: FormEvent) => {
         e.preventDefault()
 
@@ -81,6 +80,11 @@ const AddSnippet = (props: AddSnippetProps) => {
                     setSuccessMessage(data.message)
                     formRef.current?.reset()
                     setSuccess(true)
+                    setSnippets((snippets) =>
+                        snippets
+                            ? [...snippets, data.data.snippet]
+                            : [data.data.snippet]
+                    )
                 })
                 .catch((err) => {
                     const response = err.response

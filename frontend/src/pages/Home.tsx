@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Content from "../components/Content"
 import Navbar from "../components/Navbar"
 import Sidebar from "../components/Sidebar"
@@ -6,6 +6,8 @@ import Modal from "../components/Modal"
 import AddSnippet from "../components/AddSnippet"
 import AddCollection from "../components/AddCollection"
 import AddTag from "../components/AddTag"
+import Snippet from "../types/Snippet"
+import axiosClient from "../axios-client"
 
 const Home = () => {
     const [selectedTab, setSelectedTab] = useState("snippets")
@@ -15,6 +17,26 @@ const Home = () => {
     const [modalPosition, setModalPosition] = useState<"right" | "left">(
         "right"
     )
+
+    const [snippets, setSnippets] = useState<Snippet[] | null>(null)
+
+    function fetchSnippets() {
+        axiosClient
+            .get("/snippets")
+            .then(({ data }) => {
+                setSnippets(data.data.snippets)
+            })
+            .catch((err) => {
+                const response = err.response
+                if (response && response.status === 403) {
+                    console.error(response.data.data)
+                }
+            })
+    }
+
+    useEffect(() => {
+        fetchSnippets()
+    }, [])
 
     const selectTab = (tab: string, type: string) => {
         setSelectedTab(tab)
@@ -32,7 +54,9 @@ const Home = () => {
     }
 
     const modalComponents: ModalComponents = {
-        add_snippet: <AddSnippet toggleModal={toggleModal} />,
+        add_snippet: (
+            <AddSnippet toggleModal={toggleModal} setSnippets={setSnippets} />
+        ),
         add_collection: <AddCollection toggleModal={toggleModal} />,
         add_tag: <AddTag toggleModal={toggleModal} />,
     }
@@ -60,6 +84,8 @@ const Home = () => {
                     show={selectedTab}
                     type={selectedType}
                     toggleModal={toggleModal}
+                    snippets={snippets}
+                    setSnippets={setSnippets}
                 />
             </div>
         </>

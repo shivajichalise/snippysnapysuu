@@ -28,6 +28,12 @@ const LeftContent = (props: LeftContentProps) => {
     }, [props.snippets])
 
     useEffect(() => {
+        if (props.snippets) {
+            setSnippetsList(props.snippets)
+        }
+    }, [props.snippets])
+
+    useEffect(() => {
         props.toShow === "favourites"
             ? setListFavouriteSnippets(true)
             : setListFavouriteSnippets(false)
