@@ -8,6 +8,8 @@ import AddCollection from "../components/AddCollection"
 import AddTag from "../components/AddTag"
 import Snippet from "../types/Snippet"
 import axiosClient from "../axios-client"
+import Collection from "../types/Collection"
+import Tag from "../types/Tag"
 
 const Home = () => {
     const [selectedTab, setSelectedTab] = useState("snippets")
@@ -38,6 +40,40 @@ const Home = () => {
         fetchSnippets()
     }, [])
 
+    const [collections, setCollections] = useState<Collection[]>([])
+    const [tags, setTags] = useState<Tag[]>([])
+    const [collectionErrors, setCollectionsErrors] = useState("")
+    const [tagErrors, setTagsErrors] = useState("")
+
+    const fetchCollections = () => {
+        axiosClient
+            .get("/collections")
+            .then(({ data }) => {
+                setCollections(data.data.collections)
+            })
+            .catch((err) => {
+                const response = err.response
+                setCollectionsErrors(response.data.message)
+            })
+    }
+
+    const fetchTags = () => {
+        axiosClient
+            .get("/tags")
+            .then(({ data }) => {
+                setTags(data.data.tags)
+            })
+            .catch((err) => {
+                const response = err.response
+                setTagsErrors(response.data.message)
+            })
+    }
+
+    useEffect(() => {
+        fetchCollections()
+        fetchTags()
+    }, [])
+
     const selectTab = (tab: string, type: string) => {
         setSelectedTab(tab)
         setSelectedType(type)
@@ -57,8 +93,13 @@ const Home = () => {
         add_snippet: (
             <AddSnippet toggleModal={toggleModal} setSnippets={setSnippets} />
         ),
-        add_collection: <AddCollection toggleModal={toggleModal} />,
-        add_tag: <AddTag toggleModal={toggleModal} />,
+        add_collection: (
+            <AddCollection
+                toggleModal={toggleModal}
+                setCollections={setCollections}
+            />
+        ),
+        add_tag: <AddTag toggleModal={toggleModal} setTags={setTags} />,
     }
 
     return (
@@ -79,6 +120,10 @@ const Home = () => {
                     tab={selectedTab}
                     selectTab={selectTab}
                     toggleModal={toggleModal}
+                    collections={collections}
+                    setCollections={setCollections}
+                    tags={tags}
+                    setTags={setTags}
                 />
                 <Content
                     show={selectedTab}

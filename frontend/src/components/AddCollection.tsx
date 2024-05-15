@@ -7,10 +7,7 @@ import Alert from "./Alert"
 import { FormEvent, useEffect, useRef, useState } from "react"
 import axiosClient from "../axios-client"
 import ValidationError from "../types/ValidationError"
-
-interface AddCollectionProps {
-    toggleModal: (add: string) => void
-}
+import AddCollectionProps from "../types/AddCollectionProps"
 
 const AddCollection = (props: AddCollectionProps) => {
     const formRef = useRef<HTMLFormElement>(null)
@@ -36,6 +33,11 @@ const AddCollection = (props: AddCollectionProps) => {
                 .then(({ data }) => {
                     setSuccessMessage(data.message)
                     formRef.current?.reset()
+                    props.setCollections((collections) =>
+                        collections
+                            ? [...collections, data.data.collection]
+                            : [data.data.collection]
+                    )
                     setSuccess(true)
                 })
                 .catch((err) => {

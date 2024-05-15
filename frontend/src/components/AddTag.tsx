@@ -7,10 +7,7 @@ import Alert from "./Alert"
 import { FormEvent, useEffect, useRef, useState } from "react"
 import axiosClient from "../axios-client"
 import ValidationError from "../types/ValidationError"
-
-interface AddTagProps {
-    toggleModal: (add: string) => void
-}
+import AddTagProps from "../types/AddTagProps"
 
 const AddTag = (props: AddTagProps) => {
     const formRef = useRef<HTMLFormElement>(null)
@@ -36,6 +33,9 @@ const AddTag = (props: AddTagProps) => {
                 .then(({ data }) => {
                     setSuccessMessage(data.message)
                     formRef.current?.reset()
+                    props.setTags((tags) =>
+                        tags ? [...tags, data.data.tag] : [data.data.tag]
+                    )
                     setSuccess(true)
                 })
                 .catch((err) => {

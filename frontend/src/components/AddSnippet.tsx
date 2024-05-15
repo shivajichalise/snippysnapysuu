@@ -52,8 +52,6 @@ const AddSnippet = (props: AddSnippetProps) => {
         setSelectedTags(selectedOptions)
     }
 
-    const setSnippets = props.setSnippets
-
     const submitForm = (e: FormEvent) => {
         e.preventDefault()
 
@@ -80,7 +78,7 @@ const AddSnippet = (props: AddSnippetProps) => {
                     setSuccessMessage(data.message)
                     formRef.current?.reset()
                     setSuccess(true)
-                    setSnippets((snippets) =>
+                    props.setSnippets((snippets) =>
                         snippets
                             ? [...snippets, data.data.snippet]
                             : [data.data.snippet]
