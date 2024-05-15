@@ -15,7 +15,7 @@ router.post(
             .notEmpty()
             .withMessage("Description field is required."),
     ],
-    [body("tags").isArray({ min: 1 }).withMessage("Tags are required.")],
+    [body("tags").isArray({ min: 0 }).withMessage("Tags are required.")],
     [
         body("language")
             .trim()
