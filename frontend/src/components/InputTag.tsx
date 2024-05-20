@@ -1,8 +1,7 @@
-import { forwardRef } from "react"
 import InputTagProps from "../types/InputTagProps"
 import Select from "react-select"
 
-const InputTag = forwardRef<HTMLInputElement, InputTagProps>((props) => {
+const InputTag = (props: InputTagProps) => {
     const {
         id,
         name,
@@ -116,6 +115,6 @@ const InputTag = forwardRef<HTMLInputElement, InputTagProps>((props) => {
             />
         </div>
     )
-})
+}
 
 export default InputTag

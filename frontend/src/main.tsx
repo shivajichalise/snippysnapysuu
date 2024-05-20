@@ -11,38 +11,38 @@ import LandingPage from "./pages/LandingPage.tsx"
 import Signup from "./pages/Signup.tsx"
 
 const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <DefaultPage />,
-    children: [
-      {
-        path: '/',
-        element: <Navigate to="/home"/>
-      },
-      {
-        path: '/home',
-        element: <App />
-      },
-    ]
-  },
-  {
-    path: '/',
-    element: <GuestPage />,
-    children: [
-      {
-        path: '/login',
-        element: <Login />
-      },
-      {
-        path: '/signup',
-        element: <Signup />
-      },
-    ]
-  },
-  {
-    path: "*",
-    element: <LandingPage />
-  }
+    {
+        path: "/",
+        element: <DefaultPage />,
+        children: [
+            {
+                path: "/",
+                element: <App />,
+            },
+            {
+                path: "/home",
+                element: <App />,
+            },
+        ],
+    },
+    {
+        path: "/",
+        element: <GuestPage />,
+        children: [
+            {
+                path: "/login",
+                element: <Login />,
+            },
+            {
+                path: "/signup",
+                element: <Signup />,
+            },
+        ],
+    },
+    {
+        path: "*",
+        element: <LandingPage />,
+    },
 ])
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -50,5 +50,5 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <ContextProvider>
             <RouterProvider router={router} />
         </ContextProvider>
-    </React.StrictMode>,
+    </React.StrictMode>
 )
