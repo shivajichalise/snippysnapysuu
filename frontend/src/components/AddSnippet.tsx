@@ -14,6 +14,7 @@ import InputTag from "./InputTag"
 import TagForOption from "../types/TagForOption"
 import AddSnippetProps from "../types/AddSnippetProps"
 import { ActionMeta } from "react-select"
+import { toast } from "sonner"
 
 const AddSnippet = (props: AddSnippetProps) => {
     const formRef = useRef<HTMLFormElement>(null)
@@ -22,9 +23,6 @@ const AddSnippet = (props: AddSnippetProps) => {
     const languageRef = useRef<HTMLSelectElement>(null)
     const codeRef = useRef<HTMLTextAreaElement>(null)
     const codeDescriptionRef = useRef<HTMLTextAreaElement>(null)
-
-    const [successMessage, setSuccessMessage] = useState<string | null>(null)
-    const [success, setSuccess] = useState<boolean>(false)
 
     const [errors, setErrors] = useState<ValidationError[]>([])
 
@@ -75,9 +73,8 @@ const AddSnippet = (props: AddSnippetProps) => {
             axiosClient
                 .post("/snippets", payload)
                 .then(({ data }) => {
-                    setSuccessMessage(data.message)
+                    props.setSuccessMessage(data.message)
                     formRef.current?.reset()
-                    setSuccess(true)
                     props.setSnippets((snippets) =>
                         snippets
                             ? [...snippets, data.data.snippet]
@@ -89,7 +86,6 @@ const AddSnippet = (props: AddSnippetProps) => {
                     if (response && response.status === 403) {
                         setErrors(response.data.data)
                     }
-                    setSuccess(false)
                 })
         } else {
             console.error("error")
@@ -139,10 +135,6 @@ const AddSnippet = (props: AddSnippetProps) => {
                 </div>
                 <hr className="bg-200 my-3 h-px w-full rounded-lg border-0" />
 
-                {success && <Alert type="primary" message={successMessage} />}
-                {!success && (
-                    <Alert type="error" message="Error creating snippet." />
-                )}
                 <form onSubmit={submitForm} ref={formRef}>
                     <InputText
                         ref={titleRef}

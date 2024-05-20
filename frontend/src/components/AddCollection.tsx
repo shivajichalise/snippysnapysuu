@@ -3,7 +3,6 @@ import IconButton from "./IconButton"
 import InputText from "./InputText"
 import InputSubmit from "./InputSubmit"
 import SpanAlert from "./SpanAlert"
-import Alert from "./Alert"
 import { FormEvent, useEffect, useRef, useState } from "react"
 import axiosClient from "../axios-client"
 import ValidationError from "../types/ValidationError"
@@ -12,9 +11,6 @@ import AddCollectionProps from "../types/AddCollectionProps"
 const AddCollection = (props: AddCollectionProps) => {
     const formRef = useRef<HTMLFormElement>(null)
     const nameRef = useRef<HTMLInputElement>(null)
-
-    const [successMessage, setSuccessMessage] = useState<string | null>(null)
-    const [success, setSuccess] = useState<boolean>(false)
 
     const [errors, setErrors] = useState<ValidationError[]>([])
 
@@ -31,21 +27,19 @@ const AddCollection = (props: AddCollectionProps) => {
             axiosClient
                 .post("/collections", payload)
                 .then(({ data }) => {
-                    setSuccessMessage(data.message)
+                    props.setSuccessMessage(data.message)
                     formRef.current?.reset()
                     props.setCollections((collections) =>
                         collections
                             ? [...collections, data.data.collection]
                             : [data.data.collection]
                     )
-                    setSuccess(true)
                 })
                 .catch((err) => {
                     const response = err.response
                     if (response && response.status === 403) {
                         setErrors(response.data.data)
                     }
-                    setSuccess(false)
                 })
         } else {
             console.error("")
@@ -72,10 +66,6 @@ const AddCollection = (props: AddCollectionProps) => {
                 </div>
                 <hr className="bg-200 my-3 h-px w-full rounded-lg border-0" />
 
-                {success && <Alert type="primary" message={successMessage} />}
-                {!success && (
-                    <Alert type="error" message="Error creating collection." />
-                )}
                 <form onSubmit={submitForm} ref={formRef}>
                     <InputText
                         ref={nameRef}

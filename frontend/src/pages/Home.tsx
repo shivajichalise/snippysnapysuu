@@ -10,6 +10,7 @@ import Snippet from "../types/Snippet"
 import axiosClient from "../axios-client"
 import Collection from "../types/Collection"
 import Tag from "../types/Tag"
+import { Toaster, toast } from "sonner"
 
 const Home = () => {
     const [selectedTab, setSelectedTab] = useState("snippets")
@@ -19,6 +20,8 @@ const Home = () => {
     const [modalPosition, setModalPosition] = useState<"right" | "left">(
         "right"
     )
+    const [successMessage, setSuccessMessage] = useState<string | null>(null)
+    const [errorMessage, setRrrorMessage] = useState<string | null>(null)
 
     const [snippets, setSnippets] = useState<Snippet[] | null>(null)
 
@@ -91,16 +94,33 @@ const Home = () => {
 
     const modalComponents: ModalComponents = {
         add_snippet: (
-            <AddSnippet toggleModal={toggleModal} setSnippets={setSnippets} />
+            <AddSnippet
+                toggleModal={toggleModal}
+                setSnippets={setSnippets}
+                setSuccessMessage={setSuccessMessage}
+            />
         ),
         add_collection: (
             <AddCollection
                 toggleModal={toggleModal}
                 setCollections={setCollections}
+                setSuccessMessage={setSuccessMessage}
             />
         ),
-        add_tag: <AddTag toggleModal={toggleModal} setTags={setTags} />,
+        add_tag: (
+            <AddTag
+                toggleModal={toggleModal}
+                setTags={setTags}
+                setSuccessMessage={setSuccessMessage}
+            />
+        ),
     }
+
+    useEffect(() => {
+        if (successMessage && typeof successMessage === "string") {
+            toast.success(successMessage)
+        }
+    }, [successMessage])
 
     return (
         <>
@@ -114,6 +134,8 @@ const Home = () => {
             </Modal>
 
             <Navbar />
+
+            <Toaster richColors />
 
             <div className="flex">
                 <Sidebar
