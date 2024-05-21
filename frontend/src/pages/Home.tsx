@@ -137,10 +137,26 @@ const Home = () => {
             })
     }
 
+    const deleteTag = (id: string) => {
+        axiosClient
+            .delete(`/tags/${id}`)
+            .then(() => {
+                setTags((prev) => prev.filter((tag) => tag.id !== id))
+                setSuccessMessage("Tag deleted successfully.")
+            })
+            .catch((err) => {
+                const response = err.response
+                setTagsErrors(response.data.message)
+            })
+    }
+
     const handleDelete = (data: string, id: string) => {
         switch (data) {
             case "collection":
                 deleteCollection(id)
+                break
+            case "tag":
+                deleteTag(id)
                 break
         }
     }

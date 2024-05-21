@@ -103,3 +103,55 @@ export async function store(req: Request, res: Response) {
     }
     return error(errorParams)
 }
+
+// @desc    Delete a tag
+// @route   DELETE /api/tag
+// @access  Private
+export async function destroy(req: Request, res: Response) {
+    const result = validationResult(req)
+    if (!result.isEmpty()) {
+        const validationErrorParams: HttpResponsesParams<ValidationError[]> = {
+            res: res,
+            data: result.array(),
+            message: "Validation failed.",
+            code: 403,
+        }
+        return error(validationErrorParams)
+    }
+
+    const id = req.params.id
+    const user_id = getCurrentUserId(req)
+
+    const tags = await sql<Tag[]>`SELECT user_id FROM tags WHERE id = ${id}`
+
+    if (tags.length > 0) {
+        const tag = tags[0]
+        if (user_id === tag.user_id) {
+            await sql`DELETE from tags WHERE id = ${id};`
+
+            const successParams: HttpResponsesParams<{}> = {
+                res: res,
+                data: {},
+                message: "Tag deleted successfully.",
+                code: 200,
+            }
+            return success(successParams)
+        } else {
+            const errorParams: HttpResponsesParams<[]> = {
+                res: res,
+                data: [],
+                message: "Not authorized.",
+                code: 401,
+            }
+            return error(errorParams)
+        }
+    }
+
+    const errorParams: HttpResponsesParams<[]> = {
+        res: res,
+        data: [],
+        message: "Tag not found.",
+        code: 404,
+    }
+    return error(errorParams)
+}

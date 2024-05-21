@@ -1,7 +1,7 @@
 import express from "express"
 import { body } from "express-validator"
 import { checkJwt } from "../middlewares/authMiddleware"
-import { getAllTags, store } from "../controllers/tagController"
+import { getAllTags, store, destroy } from "../controllers/tagController"
 
 const router = express.Router()
 
@@ -13,5 +13,7 @@ router.post(
 )
 
 router.get("/", [checkJwt], getAllTags)
+
+router.delete("/:id", [checkJwt], destroy)
 
 export default router
