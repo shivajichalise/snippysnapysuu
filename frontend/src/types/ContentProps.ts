@@ -7,6 +7,7 @@ interface ContentProps {
     toggleModal: (add: string) => void
     snippets: Snippet[] | null
     setSnippets: Dispatch<SetStateAction<Snippet[] | null>>
+    handleDelete: (data: string, id: string) => void
 }
 
 export default ContentProps

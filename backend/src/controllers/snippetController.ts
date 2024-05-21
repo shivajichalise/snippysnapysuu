@@ -119,3 +119,57 @@ export async function store(req: Request, res: Response) {
     }
     return error(errorParams)
 }
+
+// @desc    Delete a tag
+// @route   DELETE /api/tag
+// @access  Private
+export async function destroy(req: Request, res: Response) {
+    const result = validationResult(req)
+    if (!result.isEmpty()) {
+        const validationErrorParams: HttpResponsesParams<ValidationError[]> = {
+            res: res,
+            data: result.array(),
+            message: "Validation failed.",
+            code: 403,
+        }
+        return error(validationErrorParams)
+    }
+
+    const id = req.params.id
+    const user_id = getCurrentUserId(req)
+
+    const snippets = await sql<
+        Snippet[]
+    >`SELECT user_id FROM snippets WHERE id = ${id}`
+
+    if (snippets.length > 0) {
+        const snippet = snippets[0]
+        if (user_id === snippet.user_id) {
+            await sql`DELETE from snippets WHERE id = ${id};`
+
+            const successParams: HttpResponsesParams<{}> = {
+                res: res,
+                data: {},
+                message: "Snippet deleted successfully.",
+                code: 200,
+            }
+            return success(successParams)
+        } else {
+            const errorParams: HttpResponsesParams<[]> = {
+                res: res,
+                data: [],
+                message: "Not authorized.",
+                code: 401,
+            }
+            return error(errorParams)
+        }
+    }
+
+    const errorParams: HttpResponsesParams<[]> = {
+        res: res,
+        data: [],
+        message: "Snippet not found.",
+        code: 404,
+    }
+    return error(errorParams)
+}

@@ -30,6 +30,7 @@ const Content = (props: ContentProps) => {
                             id={snippetId}
                             snippets={props.snippets}
                             clearSelectedSnippet={clearSelectedSnippet}
+                            handleDelete={props.handleDelete}
                         />
                     </>
                 )}

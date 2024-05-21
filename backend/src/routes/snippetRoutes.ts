@@ -1,7 +1,11 @@
 import express from "express"
 import { body } from "express-validator"
 import { checkJwt } from "../middlewares/authMiddleware"
-import { getAllSnippets, store } from "../controllers/snippetController"
+import {
+    destroy,
+    getAllSnippets,
+    store,
+} from "../controllers/snippetController"
 
 const router = express.Router()
 
@@ -28,5 +32,7 @@ router.post(
 )
 
 router.get("/", [checkJwt], getAllSnippets)
+
+router.delete("/:id", [checkJwt], destroy)
 
 export default router

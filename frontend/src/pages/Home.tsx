@@ -150,6 +150,21 @@ const Home = () => {
             })
     }
 
+    const deleteSnippet = (id: string) => {
+        axiosClient
+            .delete(`/snippets/${id}`)
+            .then(() => {
+                setSnippets((prev) =>
+                    prev!.filter((snippet) => snippet.id !== id)
+                )
+                setSuccessMessage("Snippet deleted successfully.")
+            })
+            .catch((err) => {
+                const response = err.response
+                console.error(response)
+            })
+    }
+
     const handleDelete = (data: string, id: string) => {
         switch (data) {
             case "collection":
@@ -157,6 +172,9 @@ const Home = () => {
                 break
             case "tag":
                 deleteTag(id)
+                break
+            case "snippet":
+                deleteSnippet(id)
                 break
         }
     }
@@ -193,6 +211,7 @@ const Home = () => {
                     toggleModal={toggleModal}
                     snippets={snippets}
                     setSnippets={setSnippets}
+                    handleDelete={handleDelete}
                 />
             </div>
         </>
