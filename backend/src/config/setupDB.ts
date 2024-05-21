@@ -30,7 +30,7 @@ async function createCollectionsTable() {
         console.log(warning("Collections table doesn't exist. Creating one."))
         await sql`CREATE TABLE collections (
             id UUID PRIMARY KEY NOT NULL,
-            user_id UUID REFERENCES users,
+            user_id UUID REFERENCES users(id) ON DELETE CASCADE,
             name VARCHAR(255),
             created_at TIMESTAMP WITH TIME ZONE,
             updated_at TIMESTAMP WITH TIME ZONE
@@ -46,7 +46,7 @@ async function createSnippetsTable() {
         await sql`CREATE TABLE snippets (
             id UUID PRIMARY KEY NOT NULL,
             user_id UUID REFERENCES users,
-            collection_id UUID REFERENCES collections NULL,
+            collection_id UUID REFERENCES collections(id) ON DELETE CASCADE NULL,
             title VARCHAR(255),
             description VARCHAR(255),
             tags VARCHAR(255) ARRAY,
@@ -64,7 +64,7 @@ async function createCodesTable() {
         console.log(warning("Codes table doesn't exist. Creating one."))
         await sql`CREATE TABLE codes (
             id UUID PRIMARY KEY NOT NULL,
-            snippet_id UUID REFERENCES snippets,
+            snippet_id UUID REFERENCES snippets(id) ON DELETE CASCADE,
             language VARCHAR(255),
             description VARCHAR(255),
             code text,
@@ -81,7 +81,7 @@ async function createTagsTable() {
         console.log(warning("Tags table doesn't exist. Creating one."))
         await sql`CREATE TABLE tags (
             id UUID PRIMARY KEY NOT NULL,
-            user_id UUID REFERENCES users,
+            user_id UUID REFERENCES users(id) ON DELETE CASCADE, 
             name VARCHAR(255),
             created_at TIMESTAMP WITH TIME ZONE,
             updated_at TIMESTAMP WITH TIME ZONE
@@ -97,8 +97,8 @@ async function createSnippetTagsTable() {
             warning("Some dependency table doesn't exist. Creating one.")
         )
         await sql`CREATE TABLE snippet_tags (
-            snippet_id UUID REFERENCES snippets,
-            tag_id UUID REFERENCES tags,
+            snippet_id UUID REFERENCES snippets(id) ON DELETE CASCADE,
+            tag_id UUID REFERENCES tags(id) ON DELETE CASCADE,
             created_at TIMESTAMP WITH TIME ZONE,
             updated_at TIMESTAMP WITH TIME ZONE
         )`

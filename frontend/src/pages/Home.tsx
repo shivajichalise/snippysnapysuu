@@ -122,6 +122,29 @@ const Home = () => {
         }
     }, [successMessage])
 
+    const deleteCollection = (id: string) => {
+        axiosClient
+            .delete(`/collections/${id}`)
+            .then(() => {
+                setCollections((prev) =>
+                    prev.filter((collection) => collection.id !== id)
+                )
+                setSuccessMessage("Collection deleted successfully.")
+            })
+            .catch((err) => {
+                const response = err.response
+                setCollectionsErrors(response.data.message)
+            })
+    }
+
+    const handleDelete = (data: string, id: string) => {
+        switch (data) {
+            case "collection":
+                deleteCollection(id)
+                break
+        }
+    }
+
     return (
         <>
             <Modal
@@ -146,6 +169,7 @@ const Home = () => {
                     setCollections={setCollections}
                     tags={tags}
                     setTags={setTags}
+                    handleDelete={handleDelete}
                 />
                 <Content
                     show={selectedTab}

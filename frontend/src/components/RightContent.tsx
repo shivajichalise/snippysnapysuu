@@ -24,7 +24,6 @@ const RightContent = (props: RightContentProps) => {
     useEffect(() => {
         if (props.snippets) {
             setSnippets(props.snippets)
-            console.log(props.snippets)
         }
     }, [props.snippets])
 

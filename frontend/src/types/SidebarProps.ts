@@ -10,6 +10,7 @@ interface SidebarProps {
     setCollections: Dispatch<SetStateAction<Collection[]>>
     tags: Tag[] | null
     setTags: Dispatch<SetStateAction<Tag[]>>
+    handleDelete: (data: string, id: string) => void
 }
 
 export default SidebarProps

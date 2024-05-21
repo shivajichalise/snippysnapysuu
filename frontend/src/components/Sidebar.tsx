@@ -4,6 +4,7 @@ import {
     IconSourceCode,
     IconStarsFilled,
     IconTag,
+    IconTrash,
 } from "@tabler/icons-react"
 import Anchor from "./Anchor"
 import SidebarProps from "../types/SidebarProps"
@@ -42,18 +43,39 @@ const Sidebar = (props: SidebarProps) => {
                 </div>
                 {props.collections &&
                     props.collections.map((collection) => (
-                        <Anchor
+                        <div
+                            className="flex items-center justify-between"
                             key={collection.id}
-                            to="#"
-                            icon={<IconFolderFilled size={16} />}
-                            text={collection.name}
-                            isActive={
-                                props.tab === collection.name ? true : false
-                            }
-                            select={() =>
-                                props.selectTab(collection.name, "collection")
-                            }
-                        />
+                        >
+                            <Anchor
+                                key={collection.id}
+                                to="#"
+                                icon={<IconFolderFilled size={16} />}
+                                text={collection.name}
+                                isActive={
+                                    props.tab === collection.name ? true : false
+                                }
+                                select={() =>
+                                    props.selectTab(
+                                        collection.name,
+                                        "collection"
+                                    )
+                                }
+                                showMeatballsMenu={true}
+                            />
+
+                            <IconButton
+                                type="warning"
+                                onClick={() =>
+                                    props.handleDelete(
+                                        "collection",
+                                        collection.id
+                                    )
+                                }
+                            >
+                                <IconTrash size={12} />
+                            </IconButton>
+                        </div>
                     ))}
             </div>
             <div className="mb-4">
@@ -68,14 +90,28 @@ const Sidebar = (props: SidebarProps) => {
                 </div>
                 {props.tags &&
                     props.tags.map((tag) => (
-                        <Anchor
+                        <div
+                            className="flex items-center justify-between"
                             key={tag.id}
-                            to="#"
-                            icon={<IconTag size={16} />}
-                            text={tag.name}
-                            isActive={props.tab === tag.name ? true : false}
-                            select={() => props.selectTab(tag.name, "tag")}
-                        />
+                        >
+                            <Anchor
+                                key={tag.id}
+                                to="#"
+                                icon={<IconTag size={16} />}
+                                text={tag.name}
+                                isActive={props.tab === tag.name ? true : false}
+                                select={() => props.selectTab(tag.name, "tag")}
+                                showMeatballsMenu={true}
+                            />
+                            <IconButton
+                                type="warning"
+                                onClick={() =>
+                                    props.handleDelete("tag", tag.id)
+                                }
+                            >
+                                <IconTrash size={12} />
+                            </IconButton>
+                        </div>
                     ))}
             </div>
         </div>

@@ -1,7 +1,11 @@
 import express from "express"
 import { body } from "express-validator"
 import { checkJwt } from "../middlewares/authMiddleware"
-import { getAllCollections, store } from "../controllers/collectionController"
+import {
+    destroy,
+    getAllCollections,
+    store,
+} from "../controllers/collectionController"
 
 const router = express.Router()
 
@@ -13,5 +17,7 @@ router.post(
 )
 
 router.get("/", [checkJwt], getAllCollections)
+
+router.delete("/:id", [checkJwt], destroy)
 
 export default router
