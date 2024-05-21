@@ -21,7 +21,6 @@ const Home = () => {
         "right"
     )
     const [successMessage, setSuccessMessage] = useState<string | null>(null)
-    const [errorMessage, setRrrorMessage] = useState<string | null>(null)
 
     const [snippets, setSnippets] = useState<Snippet[] | null>(null)
 
@@ -45,8 +44,8 @@ const Home = () => {
 
     const [collections, setCollections] = useState<Collection[]>([])
     const [tags, setTags] = useState<Tag[]>([])
-    const [collectionErrors, setCollectionsErrors] = useState("")
-    const [tagErrors, setTagsErrors] = useState("")
+    const [_, setCollectionsErrors] = useState("")
+    const [__, setTagsErrors] = useState("")
 
     const fetchCollections = () => {
         axiosClient

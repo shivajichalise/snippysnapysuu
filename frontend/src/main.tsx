@@ -1,7 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
 import "./index.css"
-import { Navigate, RouterProvider, createBrowserRouter } from "react-router-dom"
+import { RouterProvider, createBrowserRouter } from "react-router-dom"
 import { ContextProvider } from "./contexts/ContextProvider.tsx"
 import DefaultPage from "./pages/DefaultPage.tsx"
 import App from "./App.tsx"

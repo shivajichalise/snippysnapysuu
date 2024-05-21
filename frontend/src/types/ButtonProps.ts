@@ -3,7 +3,7 @@ import { ReactElement } from "react"
 interface ButtonProps {
     icon?: ReactElement | null
     type: "primary" | "secondary" | "accent" | "error" | "warning" | "info"
-    onClick: (() => void) | ((e: MouseEvent) => void)
+    onClick: React.MouseEventHandler<HTMLButtonElement>
     text?: string
     children?: ReactElement
 }

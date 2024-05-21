@@ -3,16 +3,8 @@ import InputSelectProps from "../types/InputSelectProps"
 
 const InputSelect = forwardRef<HTMLSelectElement, InputSelectProps>(
     (props, ref) => {
-        const {
-            id,
-            name,
-            placeholder,
-            onChange,
-            hasLabel,
-            inputLabel,
-            required,
-            options,
-        } = props
+        const { id, name, onChange, hasLabel, inputLabel, required, options } =
+            props
 
         return (
             <div className="w-full">
@@ -32,7 +24,6 @@ const InputSelect = forwardRef<HTMLSelectElement, InputSelectProps>(
                     className="focus:border-primary-200 text-text-200 bg-300 border-100 block w-full rounded-lg border p-2.5 text-sm placeholder-gray-400 outline-none"
                     id={id}
                     name={name}
-                    placeholder={placeholder}
                     onChange={onChange}
                     ref={ref}
                 >

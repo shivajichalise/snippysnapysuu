@@ -1,0 +1,57 @@
+version: "3.8"
+
+services:
+    postgres:
+        image: postgres:16
+        restart: unless-stopped
+        volumes:
+            - db:/var/lib/postgres
+        environment:
+            POSTGRES_USER: ${DB_USERNAME}
+            POSTGRES_DB: ${DB_DATABASE}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+        healthcheck:
+            test:
+                ["CMD-SHELL", "pg_isready -U ${DB_USERNAME} -d ${DB_DATABASE}"]
+            interval: 5s
+            timeout: 5s
+            retries: 5
+
+    backend:
+        build: backend
+        container_name: snippysnappysuu_backend
+        ports:
+            - 127.0.0.1:3000:3000
+        restart: unless-stopped
+        volumes:
+            - ./backend:/backend
+            - /backend/node_modules
+        env_file:
+            - .env
+        environment:
+            - DB_HOST=postgres
+            - DB_USER=${DB_USERNAME}
+            - DB_PASSWORD=${DB_PASSWORD}
+            - DB_NAME=${DB_DATABASE}
+            - DB_PORT=${DB_PORT}
+        depends_on:
+            postgres:
+                condition: service_healthy
+        tty: true
+
+    frontend:
+        build: frontend
+        container_name: snippysnappysuu_frontend
+        ports:
+            - 127.0.0.1:5173:5173
+        restart: unless-stopped
+        volumes:
+            - ./frontend:/frontend
+            - /frontend/node_modules
+        env_file:
+            - .env
+        stdin_open: true
+        tty: true
+
+volumes:
+    db:

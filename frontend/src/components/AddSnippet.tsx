@@ -5,7 +5,6 @@ import InputSelect from "./InputSelect"
 import InputSubmit from "./InputSubmit"
 import InputTextArea from "./InputTextArea"
 import SpanAlert from "./SpanAlert"
-import Alert from "./Alert"
 import programmingLanguages from "../assets/programmingLanguages"
 import { FormEvent, useEffect, useRef, useState } from "react"
 import axiosClient from "../axios-client"
@@ -13,8 +12,6 @@ import ValidationError from "../types/ValidationError"
 import InputTag from "./InputTag"
 import TagForOption from "../types/TagForOption"
 import AddSnippetProps from "../types/AddSnippetProps"
-import { ActionMeta } from "react-select"
-import { toast } from "sonner"
 
 const AddSnippet = (props: AddSnippetProps) => {
     const formRef = useRef<HTMLFormElement>(null)
@@ -35,14 +32,11 @@ const AddSnippet = (props: AddSnippetProps) => {
         useState<ValidationError>()
 
     const [tags, setTags] = useState<TagForOption[]>([])
-    const [tagErrors, setTagsErrors] = useState("")
+    const [_, setTagsErrors] = useState("")
 
     const [selectedTags, setSelectedTags] = useState<string[]>([])
 
-    const handleTagChange = (
-        option: readonly TagForOption[],
-        actionMeta: ActionMeta<TagForOption>
-    ) => {
+    const handleTagChange = (option: readonly TagForOption[]) => {
         const selectedOptions = option.map((o) => {
             return o.value
         })
@@ -127,7 +121,7 @@ const AddSnippet = (props: AddSnippetProps) => {
                         <h1 className="text-lg">Add Snippet</h1>
                         <IconButton
                             type="primary"
-                            onClick={() => props.toggleModal()}
+                            onClick={() => props.toggleModal("add_snippet")}
                         >
                             <IconX size={15} className="m-1" />
                         </IconButton>

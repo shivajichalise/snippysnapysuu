@@ -9,9 +9,7 @@ import IconButton from "./IconButton"
 const UserProfileMenu = (props: UserProfileMenuProps) => {
     const { setUser, setToken } = useStateContext()
 
-    function logout(e: MouseEvent) {
-        e.preventDefault()
-
+    function logout() {
         axiosClient
             .post("/auth/logout")
             .then(() => {
@@ -62,4 +60,3 @@ const UserProfileMenu = (props: UserProfileMenuProps) => {
 }
 
 export default UserProfileMenu
-
