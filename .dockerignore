@@ -1,0 +1,28 @@
+# See https://docs.docker.com/engine/reference/builder/#dockerignore-file for more about ignoring files.
+
+# Ignore git directory.
+/.git/
+/.gitignore
+
+# Ignore all environment files (except templates).
+/.env*
+!/.env*.erb
+
+# Ignore assets.
+node_modules/
+
+# Ignore Docker-related files
+/.dockerignore
+/Dockerfile*
+
+# Ignore markdowns
+**/*.md
+
+# Ignore Nodejs files
+dist/
+npm-debug.log
+.coverage
+.coverage.*
+
+# Ignore TypeScript build artifacts
+/tsconfig.tsbuildinfo
